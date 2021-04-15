@@ -1,20 +1,20 @@
-const bcrypt = require("bcryptjs");
-const jwt = require("jsonwebtoken");
-const _ = require("lodash");
-const keys = require("../config/keys");
-const getConfigs = require("../config/getConfigs");
-const passport = require("passport");
-const uniqueRandom = require("unique-random");
+const bcrypt = require('bcryptjs');
+const jwt = require('jsonwebtoken');
+const _ = require('lodash');
+const keys = require('../config/keys');
+const getConfigs = require('../config/getConfigs');
+const passport = require('passport');
+const uniqueRandom = require('unique-random');
 const rand = uniqueRandom(10000000, 99999999);
 
 // Load Customer model
-const Customer = require("../models/Customer");
+const Customer = require('../models/Customer');
 
 // Load validation helper to validate all received fields
-const validateRegistrationForm = require("../validation/validationHelper");
+const validateRegistrationForm = require('../validation/validationHelper');
 
 // Load helper for creating correct query to save customer to DB
-const queryCreator = require("../commonHelpers/queryCreator");
+const queryCreator = require('../commonHelpers/queryCreator');
 
 // Controller for creating customer and saving to DB
 exports.createCustomer = (req, res, next) => {
@@ -30,20 +30,16 @@ exports.createCustomer = (req, res, next) => {
   }
 
   Customer.findOne({
-    $or: [{ email: req.body.email }, { login: req.body.login }]
+    $or: [{ email: req.body.email }, { login: req.body.login }],
   })
     .then(customer => {
       if (customer) {
         if (customer.email === req.body.email) {
-          return res
-            .status(400)
-            .json({ message: `Email ${customer.email} already exists"` });
+          return res.status(400).json({ message: `Email ${customer.email} already exists"` });
         }
 
         if (customer.login === req.body.login) {
-          return res
-            .status(400)
-            .json({ message: `Login ${customer.login} already exists` });
+          return res.status(400).json({ message: `Login ${customer.login} already exists` });
         }
       }
 
@@ -53,9 +49,7 @@ exports.createCustomer = (req, res, next) => {
       bcrypt.genSalt(10, (err, salt) => {
         bcrypt.hash(newCustomer.password, salt, (err, hash) => {
           if (err) {
-            res
-              .status(400)
-              .json({ message: `Error happened on server: ${err}` });
+            res.status(400).json({ message: `Error happened on server: ${err}` });
 
             return;
           }
@@ -66,7 +60,7 @@ exports.createCustomer = (req, res, next) => {
             .then(customer => res.json(customer))
             .catch(err =>
               res.status(400).json({
-                message: `Error happened on server: "${err}" `
+                message: `Error happened on server: "${err}" `,
               })
             );
         });
@@ -74,7 +68,7 @@ exports.createCustomer = (req, res, next) => {
     })
     .catch(err =>
       res.status(400).json({
-        message: `Error happened on server: "${err}" `
+        message: `Error happened on server: "${err}" `,
       })
     );
 };
@@ -94,12 +88,12 @@ exports.loginCustomer = async (req, res, next) => {
 
   // Find customer by email
   Customer.findOne({
-    $or: [{ email: loginOrEmail }, { login: loginOrEmail }]
+    $or: [{ email: loginOrEmail }, { login: loginOrEmail }],
   })
     .then(customer => {
       // Check for customer
       if (!customer) {
-        errors.loginOrEmail = "Customer not found";
+        errors.loginOrEmail = 'Customer not found';
         return res.status(404).json(errors);
       }
 
@@ -111,30 +105,25 @@ exports.loginCustomer = async (req, res, next) => {
             id: customer.id,
             firstName: customer.firstName,
             lastName: customer.lastName,
-            isAdmin: customer.isAdmin
+            isAdmin: customer.isAdmin,
           }; // Create JWT Payload
 
           // Sign Token
-          jwt.sign(
-            payload,
-            keys.secretOrKey,
-            { expiresIn: 36000 },
-            (err, token) => {
-              res.json({
-                success: true,
-                token: "Bearer " + token
-              });
-            }
-          );
+          jwt.sign(payload, keys.secretOrKey, { expiresIn: 36000 }, (err, token) => {
+            res.json({
+              success: true,
+              token: token,
+            });
+          });
         } else {
-          errors.password = "Password incorrect";
+          errors.password = 'Password incorrect';
           return res.status(400).json(errors);
         }
       });
     })
     .catch(err =>
       res.status(400).json({
-        message: `Error happened on server: "${err}" `
+        message: `Error happened on server: "${err}" `,
       })
     );
 };
@@ -159,7 +148,7 @@ exports.editCustomerInfo = (req, res) => {
   Customer.findOne({ _id: req.user.id })
     .then(customer => {
       if (!customer) {
-        errors.id = "Customer not found";
+        errors.id = 'Customer not found';
         return res.status(404).json(errors);
       }
 
@@ -199,21 +188,17 @@ exports.editCustomerInfo = (req, res) => {
       // Create query object for qustomer for saving him to DB
       const updatedCustomer = queryCreator(initialQuery);
 
-      Customer.findOneAndUpdate(
-        { _id: req.user.id },
-        { $set: updatedCustomer },
-        { new: true }
-      )
+      Customer.findOneAndUpdate({ _id: req.user.id }, { $set: updatedCustomer }, { new: true })
         .then(customer => res.json(customer))
         .catch(err =>
           res.status(400).json({
-            message: `Error happened on server: "${err}" `
+            message: `Error happened on server: "${err}" `,
           })
         );
     })
     .catch(err =>
       res.status(400).json({
-        message: `Error happened on server:"${err}" `
+        message: `Error happened on server:"${err}" `,
       })
     );
 };
@@ -231,9 +216,9 @@ exports.updatePassword = (req, res) => {
   Customer.findOne({ _id: req.user.id }, (err, customer) => {
     let oldPassword = req.body.password;
 
-    customer.comparePassword(oldPassword, function(err, isMatch) {
+    customer.comparePassword(oldPassword, function (err, isMatch) {
       if (!isMatch) {
-        errors.password = "Password does not match";
+        errors.password = 'Password does not match';
         res.json(errors);
       } else {
         let newPassword = req.body.newPassword;
@@ -246,20 +231,20 @@ exports.updatePassword = (req, res) => {
               { _id: req.user.id },
               {
                 $set: {
-                  password: newPassword
-                }
+                  password: newPassword,
+                },
               },
               { new: true }
             )
               .then(customer => {
                 res.json({
-                  message: "Password successfully changed",
-                  customer: customer
+                  message: 'Password successfully changed',
+                  customer: customer,
                 });
               })
               .catch(err =>
                 res.status(400).json({
-                  message: `Error happened on server: "${err}" `
+                  message: `Error happened on server: "${err}" `,
                 })
               );
           });
