@@ -6,12 +6,12 @@ const passport = require('passport');
 const path = require('path');
 require('dotenv').config();
 
+const brands = require('./routes/brands');
 const globalConfigs = require('./routes/globalConfigs');
 const customers = require('./routes/customers');
 const catalog = require('./routes/catalog');
 const products = require('./routes/products');
 const colors = require('./routes/colors');
-const sizes = require('./routes/sizes');
 const filters = require('./routes/filters');
 const subscribers = require('./routes/subscribers');
 const cart = require('./routes/cart');
@@ -50,12 +50,12 @@ app.use(passport.initialize());
 require('./config/passport')(passport);
 
 // Use Routes
+app.use('/api/brands', brands);
 app.use('/api/configs', globalConfigs);
 app.use('/api/customers', customers);
 app.use('/api/catalog', catalog);
 app.use('/api/products', products);
 app.use('/api/colors', colors);
-app.use('/api/sizes', sizes);
 app.use('/api/filters', filters);
 app.use('/api/subscribers', subscribers);
 app.use('/api/cart', cart);
