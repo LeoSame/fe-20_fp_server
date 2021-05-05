@@ -35,11 +35,11 @@ exports.createCustomer = (req, res, next) => {
     .then(customer => {
       if (customer) {
         if (customer.email === req.body.email) {
-          return res.status(400).json({ message: `Email ${customer.email} already exists"` });
+          return res.status(400).json({ message: `Email ${customer.email} уже существует"` });
         }
 
         if (customer.login === req.body.login) {
-          return res.status(400).json({ message: `Login ${customer.login} already exists` });
+          return res.status(400).json({ message: `Логин ${customer.login} уже существует` });
         }
       }
 
@@ -49,7 +49,7 @@ exports.createCustomer = (req, res, next) => {
       bcrypt.genSalt(10, (err, salt) => {
         bcrypt.hash(newCustomer.password, salt, (err, hash) => {
           if (err) {
-            res.status(400).json({ message: `Error happened on server: ${err}` });
+            res.status(400).json({ message: `Ошибка на сервере: ${err}` });
 
             return;
           }
@@ -60,7 +60,7 @@ exports.createCustomer = (req, res, next) => {
             .then(customer => res.json(customer))
             .catch(err =>
               res.status(400).json({
-                message: `Error happened on server: "${err}" `,
+                message: `Ошибка на сервере: "${err}" `,
               })
             );
         });
@@ -68,7 +68,7 @@ exports.createCustomer = (req, res, next) => {
     })
     .catch(err =>
       res.status(400).json({
-        message: `Error happened on server: "${err}" `,
+        message: `Ошибка на сервере: "${err}" `,
       })
     );
 };
@@ -93,7 +93,7 @@ exports.loginCustomer = async (req, res, next) => {
     .then(customer => {
       // Check for customer
       if (!customer) {
-        errors.loginOrEmail = 'Customer not found';
+        errors.loginOrEmail = 'Пользователя не найдено';
         return res.status(404).json(errors);
       }
 
@@ -116,14 +116,14 @@ exports.loginCustomer = async (req, res, next) => {
             });
           });
         } else {
-          errors.password = 'Password incorrect';
+          errors.password = 'Неверный пароль';
           return res.status(400).json(errors);
         }
       });
     })
     .catch(err =>
       res.status(400).json({
-        message: `Error happened on server: "${err}" `,
+        message: `Ошибка на сервере: "${err}" `,
       })
     );
 };
@@ -148,7 +148,7 @@ exports.editCustomerInfo = (req, res) => {
   Customer.findOne({ _id: req.user.id })
     .then(customer => {
       if (!customer) {
-        errors.id = 'Customer not found';
+        errors.id = 'Пользователя не найдено';
         return res.status(404).json(errors);
       }
 
@@ -163,7 +163,7 @@ exports.editCustomerInfo = (req, res) => {
         if (currentEmail !== newEmail) {
           Customer.findOne({ email: newEmail }).then(customer => {
             if (customer) {
-              errors.email = `Email ${newEmail} is already exists`;
+              errors.email = `Email ${newEmail} уже существует`;
               res.status(400).json(errors);
               return;
             }
@@ -177,7 +177,7 @@ exports.editCustomerInfo = (req, res) => {
         if (currentLogin !== newLogin) {
           Customer.findOne({ login: newLogin }).then(customer => {
             if (customer) {
-              errors.login = `Login ${newLogin} is already exists`;
+              errors.login = `Логин ${newLogin} уже существует`;
               res.status(400).json(errors);
               return;
             }
@@ -192,13 +192,13 @@ exports.editCustomerInfo = (req, res) => {
         .then(customer => res.json(customer))
         .catch(err =>
           res.status(400).json({
-            message: `Error happened on server: "${err}" `,
+            message: `Ошибка на сервере: "${err}" `,
           })
         );
     })
     .catch(err =>
       res.status(400).json({
-        message: `Error happened on server:"${err}" `,
+        message: `Ошибка на сервере:"${err}" `,
       })
     );
 };
@@ -218,7 +218,7 @@ exports.updatePassword = (req, res) => {
 
     customer.comparePassword(oldPassword, function (err, isMatch) {
       if (!isMatch) {
-        errors.password = 'Password does not match';
+        errors.password = 'Пароль не подходит';
         res.json(errors);
       } else {
         let newPassword = req.body.newPassword;
@@ -238,13 +238,13 @@ exports.updatePassword = (req, res) => {
             )
               .then(customer => {
                 res.json({
-                  message: 'Password successfully changed',
+                  message: 'Пароль успешно изменен',
                   customer: customer,
                 });
               })
               .catch(err =>
                 res.status(400).json({
-                  message: `Error happened on server: "${err}" `,
+                  message: `Ошибка на сервере: "${err}" `,
                 })
               );
           });
