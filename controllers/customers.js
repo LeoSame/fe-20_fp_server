@@ -219,7 +219,7 @@ exports.updatePassword = (req, res) => {
     customer.comparePassword(oldPassword, function (err, isMatch) {
       if (!isMatch) {
         errors.password = 'Пароль не подходит';
-        res.json(errors);
+        res.status(400).json(errors);
       } else {
         let newPassword = req.body.newPassword;
 
