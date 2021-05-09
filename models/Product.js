@@ -50,6 +50,15 @@ const ProductSchema = new Schema(
     brand: {
       type: String,
     },
+    superPrice: {
+      type: Boolean,
+    },
+    isNew: {
+      type: Boolean,
+    },
+    isHit: {
+      type: Boolean,
+    },
     manufacturer: {
       type: String,
     },
