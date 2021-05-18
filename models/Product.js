@@ -31,7 +31,6 @@ const ProductSchema = new Schema(
       {
         smallImage: String,
         largeImage: String,
-        required: true,
       },
     ],
     quantity: {
