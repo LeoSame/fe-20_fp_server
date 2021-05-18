@@ -44,9 +44,16 @@ const ProductSchema = new Schema(
     sizes: {
       type: String,
     },
-    productUrl: {
-      type: String,
-    },
+    productUrl: [
+      {
+        smallImage: {
+          type: String,
+        },
+        largeImage: {
+          type: String,
+        },
+      },
+    ],
     brand: {
       type: String,
     },

@@ -35,7 +35,7 @@ exports.createCustomer = (req, res, next) => {
     .then(customer => {
       if (customer) {
         if (customer.email === req.body.email) {
-          return res.status(400).json({ message: `Email ${customer.email} уже существует"` });
+          return res.status(400).json({ message: `Email ${customer.email} уже существует` });
         }
 
         if (customer.login === req.body.login) {
