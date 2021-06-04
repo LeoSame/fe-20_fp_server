@@ -42,7 +42,7 @@ exports.placeOrder = async (req, res, next) => {
     if (cartProducts.length > 0) {
       order.products = _.cloneDeep(cartProducts);
     } else {
-      order.products = JSON.parse(req.body.products);
+      order.products = req.body.products;
     }
 
     order.totalSum = order.products.reduce(
