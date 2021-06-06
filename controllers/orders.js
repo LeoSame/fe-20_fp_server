@@ -277,9 +277,6 @@ exports.getCustommerOrders = (req, res, next) => {
 exports.getAllOrders = async (req, res, next) => {
   const perPage = Number(req.query.perPage);
   const startPage = Number(req.query.startPage);
-  if (req.query.status) {
-    const status = Number(req.query.status);
-  }
 
   try {
     const orders = await Order.find()
