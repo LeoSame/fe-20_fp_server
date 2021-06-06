@@ -274,15 +274,23 @@ exports.getCustommerOrders = (req, res, next) => {
     );
 };
 
-exports.getAllOrders = (req, res, next) => {
-  Order.find({ status: ['processed', 'sent'] })
-    .populate('customerId')
-    .then(orders => res.json(orders))
-    .catch(err =>
-      res.status(400).json({
-        message: `Error happened on server: "${err}" `,
-      })
-    );
+exports.getAllOrders = async (req, res, next) => {
+  const perPage = Number(req.query.perPage);
+  const startPage = Number(req.query.startPage);
+
+  try {
+    const orders = await Order.find({ status: ['processed', 'sent'] })
+      .skip(startPage * perPage - perPage)
+      .limit(perPage);
+
+    const ordersQuantity = await Order.find({ status: ['processed', 'sent'] });
+
+    res.json({ orders, ordersQuantity: ordersQuantity.length });
+  } catch (err) {
+    res.status(400).json({
+      message: `Error happened on server: "${err}" `,
+    });
+  }
 };
 
 exports.getOrder = (req, res, next) => {
