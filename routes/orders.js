@@ -3,7 +3,15 @@ const router = express.Router();
 const passport = require('passport');
 
 //Import controllers
-const { placeOrder, updateOrder, cancelOrder, deleteOrder, getOrders, getOrder } = require('../controllers/orders');
+const {
+  placeOrder,
+  updateOrder,
+  cancelOrder,
+  deleteOrder,
+  getCustommerOrders,
+  getAllOrders,
+  getOrder,
+} = require('../controllers/orders');
 
 // @route   POST /orders
 // @desc    Place Order
@@ -28,7 +36,12 @@ router.delete('/:id', passport.authenticate('jwt', { session: false }), deleteOr
 // @route   GET /orders
 // @desc    Get all orders
 // @access  Private
-router.get('/', passport.authenticate('jwt', { session: false }), getOrders);
+router.get('/', passport.authenticate('jwt', { session: false }), getCustommerOrders);
+
+// @route   GET /orders
+// @desc    Get all orders
+// @access  Private
+router.get('/all', passport.authenticate('jwt-admin', { session: false }), getAllOrders);
 
 // @route   GET /orders/:orderNo
 // @desc    Get one order by orderNo

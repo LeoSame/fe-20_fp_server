@@ -122,15 +122,15 @@ exports.updateOrder = (req, res, next) => {
       const order = _.cloneDeep(req.body);
 
       if (req.body.deliveryAddress) {
-        order.deliveryAddress = JSON.parse(req.body.deliveryAddress);
+        order.deliveryAddress = req.body.deliveryAddress;
       }
 
       if (req.body.shipping) {
-        order.shipping = JSON.parse(req.body.shipping);
+        order.shipping = req.body.shipping;
       }
 
       if (req.body.paymentInfo) {
-        order.paymentInfo = JSON.parse(req.body.paymentInfo);
+        order.paymentInfo = req.body.paymentInfo;
       }
 
       if (req.body.customerId) {
@@ -138,7 +138,7 @@ exports.updateOrder = (req, res, next) => {
       }
 
       if (req.body.products) {
-        order.products = JSON.parse(req.body.products);
+        order.products = req.body.products;
 
         order.totalSum = order.products.reduce(
           (sum, cartItem) => sum + cartItem.product.currentPrice * cartItem.cartQuantity,
@@ -263,8 +263,19 @@ exports.deleteOrder = (req, res, next) => {
   });
 };
 
-exports.getOrders = (req, res, next) => {
+exports.getCustommerOrders = (req, res, next) => {
   Order.find({ customerId: req.user.id })
+    .populate('customerId')
+    .then(orders => res.json(orders))
+    .catch(err =>
+      res.status(400).json({
+        message: `Error happened on server: "${err}" `,
+      })
+    );
+};
+
+exports.getAllOrders = (req, res, next) => {
+  Order.find({ status: ['processed', 'sent'] })
     .populate('customerId')
     .then(orders => res.json(orders))
     .catch(err =>
