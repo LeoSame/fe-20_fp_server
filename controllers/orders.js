@@ -277,14 +277,16 @@ exports.getCustommerOrders = (req, res, next) => {
 exports.getAllOrders = async (req, res, next) => {
   const perPage = Number(req.query.perPage);
   const startPage = Number(req.query.startPage);
-  const status = Number(req.query.status);
+  if (req.query.status) {
+    const status = Number(req.query.status);
+  }
 
   try {
-    const orders = await Order.find(status)
+    const orders = await Order.find()
       .skip(startPage * perPage - perPage)
       .limit(perPage);
 
-    const ordersQuantity = await Order.find(status);
+    const ordersQuantity = await Order.find();
 
     res.json({ orders, ordersQuantity: ordersQuantity.length });
   } catch (err) {
