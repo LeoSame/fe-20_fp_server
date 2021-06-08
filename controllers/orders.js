@@ -277,11 +277,13 @@ exports.getCustommerOrders = (req, res, next) => {
 exports.getAllOrders = async (req, res, next) => {
   const perPage = Number(req.query.perPage);
   const startPage = Number(req.query.startPage);
+  const sort = req.query.sort;
 
   try {
     const orders = await Order.find()
       .skip(startPage * perPage - perPage)
-      .limit(perPage);
+      .limit(perPage)
+      .sort(sort);
 
     const ordersQuantity = await Order.find();
 
