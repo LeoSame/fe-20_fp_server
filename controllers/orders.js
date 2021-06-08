@@ -309,8 +309,8 @@ exports.getAllOrders = async (req, res, next) => {
 
   const findObj = {};
 
-  if (req.body.status) {
-    findObj.status = req.body.status;
+  if (req.query.status) {
+    findObj.status = req.query.status;
   }
 
   try {
