@@ -7,6 +7,7 @@ const {
   placeOrder,
   updateOrder,
   cancelOrder,
+  changeStatus,
   deleteOrder,
   getCustommerOrders,
   getAllOrders,
@@ -27,6 +28,11 @@ router.put('/:id', passport.authenticate('jwt', { session: false }), updateOrder
 // @desc    Cancel order
 // @access  Private
 router.put('/cancel/:id', passport.authenticate('jwt', { session: false }), cancelOrder);
+
+// @route   PUT /orders/status/:id
+// @desc    Change status
+// @access  Private
+router.put('/status/:id', passport.authenticate('jwt-admin', { session: false }), changeStatus);
 
 // @route   DELETE /orders/:id
 // @desc    Delete order

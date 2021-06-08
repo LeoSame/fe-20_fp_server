@@ -196,6 +196,34 @@ exports.updateOrder = (req, res, next) => {
   });
 };
 
+exports.changeStatus = (req, res, next) => {
+  Order.findOne({ _id: req.params.id }).then(async currentOrder => {
+    if (!currentOrder) {
+      return res.status(400).json({ message: `Order with id ${req.params.id} is not found` });
+    } else {
+      const order = _.cloneDeep(req.body);
+
+      const { errors, isValid } = validateOrderForm(req.body);
+
+      // Check Validation
+      if (!isValid) {
+        return res.status(400).json(errors);
+      }
+
+      Order.findOneAndUpdate({ _id: req.params.id }, { $set: order }, { new: true })
+        .populate('customerId')
+        .then(async order => {
+          res.json({ order });
+        })
+        .catch(err =>
+          res.status(400).json({
+            message: `Error happened on server: "${err}" `,
+          })
+        );
+    }
+  });
+};
+
 exports.cancelOrder = (req, res, next) => {
   Order.findOne({ _id: req.params.id }).then(async currentOrder => {
     if (!currentOrder) {
