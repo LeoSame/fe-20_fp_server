@@ -308,7 +308,7 @@ exports.getAllOrders = async (req, res, next) => {
   const sort = req.query.sort;
 
   try {
-    const orders = await Order.find()
+    const orders = await Order.find({ status: req.body.status })
       .skip(startPage * perPage - perPage)
       .limit(perPage)
       .sort(sort);
