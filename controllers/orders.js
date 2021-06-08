@@ -307,13 +307,19 @@ exports.getAllOrders = async (req, res, next) => {
   const startPage = Number(req.query.startPage);
   const sort = req.query.sort;
 
+  const findObj = {};
+
+  if (req.body.status) {
+    findObj.status = req.body.status;
+  }
+
   try {
-    const orders = await Order.find({ status: req.body.status })
+    const orders = await Order.find(findObj)
       .skip(startPage * perPage - perPage)
       .limit(perPage)
       .sort(sort);
 
-    const ordersQuantity = await Order.find();
+    const ordersQuantity = await Order.find(findObj);
 
     res.json({ orders, ordersQuantity: ordersQuantity.length });
   } catch (err) {
