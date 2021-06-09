@@ -12,7 +12,7 @@ const ErrorSchema = new Schema(
       required: true,
     },
     error: {
-      type: Object,
+      type: String,
       required: true,
     },
     errorInfo: {
