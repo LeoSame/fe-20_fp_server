@@ -5,12 +5,15 @@ const ErrorSchema = new Schema(
   {
     name: {
       type: String,
+      required: true,
     },
     message: {
       type: String,
+      required: true,
     },
     error: {
       type: Object,
+      required: true,
     },
     errorInfo: {
       type: Object,
