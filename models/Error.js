@@ -11,12 +11,9 @@ const ErrorSchema = new Schema(
       type: String,
       required: true,
     },
-    error: {
-      type: String,
-      required: true,
-    },
     errorInfo: {
       type: Object,
+      required: true,
     },
     date: {
       type: Date,
