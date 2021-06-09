@@ -5,18 +5,18 @@ const passport = require('passport'); // multer for parsing multipart form data 
 //Import controllers
 const { addError, deleteError, getErrors } = require('../controllers/error');
 
-// @route   POST /brands
-// @desc    Create new brand
+// @route   POST /errors
+// @desc    Create new error
 // @access  Private
 router.post('/', addError);
 
-// @route   DELETE /brands/:id
-// @desc    DELETE existing brand
+// @route   DELETE /errors/:id
+// @desc    DELETE existing error
 // @access  Private
 router.delete('/:id', passport.authenticate('jwt-admin', { session: false }), deleteError);
 
-// @route   GET /brands
-// @desc    GET existing brand
+// @route   GET /errors
+// @desc    GET existing error
 // @access  Public
 router.get('/', passport.authenticate('jwt-admin', { session: false }), getErrors);
 
