@@ -51,12 +51,6 @@ const CustomerSchema = new Schema(
       required: true,
       default: true,
     },
-    resetPasswordToken: {
-      type: String,
-    },
-    resetPasswordExpires: {
-      type: Date,
-    },
     date: {
       type: Date,
       default: Date.now,
