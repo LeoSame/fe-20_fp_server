@@ -132,7 +132,13 @@ exports.loginCustomer = async (req, res, next) => {
 
 // Controller for getting current customer
 exports.getCustomer = (req, res) => {
-  res.json(req.user);
+  try {
+    res.json(req.user);
+  } catch (err) {
+    res.status(400).json({
+      message: `Ошибка на сервере: "${err}" `,
+    });
+  }
 };
 
 // Controller for editing customer personal info
