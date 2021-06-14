@@ -14,18 +14,20 @@ module.exports = async passport => {
   passport.use(
     'jwt',
     new JwtStrategy(opts, (jwt_payload, done) => {
-      Customer.findById(jwt_payload.id)
-        .then(customer => {
-          if (customer) {
-            return done(null, customer);
-          }
-          return done(null, false);
-        })
-        .catch(err =>
-          res.status(401).json({
-            message: `Пользователь не авторизован`,
+      try {
+        Customer.findById(jwt_payload.id)
+          .then(customer => {
+            if (customer) {
+              return done(null, customer);
+            }
+            return done(null, false);
           })
-        );
+          .catch(err => console.log(err));
+      } catch (err) {
+        res.status(401).json({
+          message: `Не авторизован!`,
+        });
+      }
     })
   );
 
