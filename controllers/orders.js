@@ -269,6 +269,7 @@ exports.cancelOrder = (req, res, next) => {
     }
   });
 };
+
 exports.deleteOrder = (req, res, next) => {
   Order.findOne({ _id: req.params.id }).then(async order => {
     if (!order) {

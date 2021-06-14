@@ -2,7 +2,9 @@ const bcrypt = require('bcryptjs');
 const jwt = require('jsonwebtoken');
 const _ = require('lodash');
 const keys = require('../config/keys');
+const sendMail = require('../commonHelpers/mailSender');
 const getConfigs = require('../config/getConfigs');
+const crypto = require('crypto');
 const passport = require('passport');
 const uniqueRandom = require('unique-random');
 const rand = uniqueRandom(10000000, 99999999);
@@ -251,5 +253,41 @@ exports.updatePassword = (req, res) => {
         });
       }
     });
+  });
+};
+
+exports.forgotPassword = (req, res, next) => {
+  Customer.findOne({ email: req.body.email }).then(async customer => {
+    if (!customer) {
+      return res.status(400).json({ message: `Пользователя таким email не найдено` });
+    } else {
+      const { errors, isValid } = validateRegistrationForm(req.body);
+
+      // Check Validation
+      if (!isValid) {
+        return res.status(400).json(errors);
+      }
+
+      const token = crypto.randomBytes(10);
+
+      Customer.findOneAndUpdate(
+        { email: req.body.email },
+        { resetPasswordToken: token, resetPasswordExpires: Date.now() + 3600000 }
+      )
+        .populate('customerId')
+        .then(async customer => {
+          const letterSubject = 'Вы дествительно забыли пароль?';
+          const letterHtml = `<div>Вот Ваш Токен! ${token}</div>`;
+
+          const mailResult = await sendMail(req.body.email, letterSubject, letterHtml, res);
+
+          res.json({ customer, mailResult });
+        })
+        .catch(err =>
+          res.status(400).json({
+            message: `Error happened on server: "${err}" `,
+          })
+        );
+    }
   });
 };

@@ -9,6 +9,7 @@ const {
   getCustomer,
   editCustomerInfo,
   updatePassword,
+  forgotPassword,
 } = require('../controllers/customers');
 
 // @route   POST /customers
@@ -35,5 +36,10 @@ router.put('/', passport.authenticate('jwt', { session: false }), editCustomerIn
 // @desc    Return current customer and success or error message
 // @access  Private
 router.put('/password', passport.authenticate('jwt', { session: false }), updatePassword);
+
+// @route   POST /customers/profile/update-password
+// @desc    Return current customer and success or error message
+// @access  Private
+router.post('/forgot', forgotPassword);
 
 module.exports = router;
