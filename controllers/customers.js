@@ -4,7 +4,7 @@ const _ = require('lodash');
 const keys = require('../config/keys');
 const sendMail = require('../commonHelpers/mailSender');
 const getConfigs = require('../config/getConfigs');
-const crypto = require('crypto');
+import argon2 from 'argon2';
 const passport = require('passport');
 const uniqueRandom = require('unique-random');
 const rand = uniqueRandom(10000000, 99999999);
@@ -268,7 +268,7 @@ exports.forgotPassword = (req, res, next) => {
         return res.status(400).json(errors);
       }
 
-      const token = crypto.randomBytes(10);
+      const token = await argon2.hash(req.body.email);
 
       Customer.findOneAndUpdate(
         { email: req.body.email },
@@ -281,7 +281,7 @@ exports.forgotPassword = (req, res, next) => {
 
           const mailResult = await sendMail(req.body.email, letterSubject, letterHtml, res);
 
-          res.json({ customer, mailResult });
+          res.json({ customer, mailResult, token });
         })
         .catch(err =>
           res.status(400).json({
@@ -295,9 +295,10 @@ exports.forgotPassword = (req, res, next) => {
 exports.resetPassword = (req, res, next) => {
   Customer.findOne({ resetPasswordToken: req.params.token }).then(async customer => {
     if (!customer) {
-      return res
-        .status(400)
-        .json({ message: `Токен сброса пароля недействителен или срок его действия истек.`, customer: customer });
+      return res.status(400).json({
+        message: `Токен сброса пароля недействителен или срок его действия истек.`,
+        customer: req.params.token,
+      });
     } else {
       const { errors, isValid } = validateRegistrationForm(req.body);
 
