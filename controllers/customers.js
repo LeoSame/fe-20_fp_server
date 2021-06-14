@@ -277,7 +277,7 @@ exports.forgotPassword = (req, res, next) => {
         .populate('customerId')
         .then(async customer => {
           const letterSubject = 'Вы дествительно забыли пароль?';
-          const letterHtml = `<div>Вот Ваш Токен! ${token}</div>`;
+          const letterHtml = `<div>Вот ${req.headers.host} Ваш Токен! ${token}</div>`;
 
           const mailResult = await sendMail(req.body.email, letterSubject, letterHtml, res);
 
@@ -288,6 +288,57 @@ exports.forgotPassword = (req, res, next) => {
             message: `Error happened on server: "${err}" `,
           })
         );
+    }
+  });
+};
+
+exports.resetPassword = (req, res, next) => {
+  Customer.findOne({ resetPasswordToken: req.params.token }).then(async customer => {
+    if (!customer) {
+      return res
+        .status(400)
+        .json({ message: `Токен сброса пароля недействителен или срок его действия истек.`, customer: customer });
+    } else {
+      const { errors, isValid } = validateRegistrationForm(req.body);
+
+      // Check Validation
+      if (!isValid) {
+        return res.status(400).json(errors);
+      }
+
+      let newPassword = req.body.newPassword;
+
+      bcrypt.genSalt(10, (err, salt) => {
+        bcrypt.hash(req.body.password, salt, (err, hash) => {
+          if (err) {
+            res.status(400).json({ message: `Ошибка на сервере: ${err}` });
+            return;
+          }
+          newPassword = hash;
+          Customer.findOneAndUpdate(
+            { resetPasswordToken: req.params.token, resetPasswordExpires: { $gt: Date.now() } },
+            {
+              $set: {
+                password: newPassword,
+                resetPasswordToken: null,
+                resetPasswordExpires: null,
+              },
+            },
+            { new: true }
+          )
+            .then(customer => {
+              res.json({
+                message: 'Пароль успешно изменен',
+                customer: customer,
+              });
+            })
+            .catch(err =>
+              res.status(400).json({
+                message: `Ошибка на сервере: "${err}" `,
+              })
+            );
+        });
+      });
     }
   });
 };
