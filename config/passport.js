@@ -1,9 +1,9 @@
-const JwtStrategy = require("passport-jwt").Strategy;
-const ExtractJwt = require("passport-jwt").ExtractJwt;
-const mongoose = require("mongoose");
-const Customer = mongoose.model("customers");
-const getConfigs = require("../config/getConfigs");
-const keys = require("./keys.js");
+const JwtStrategy = require('passport-jwt').Strategy;
+const ExtractJwt = require('passport-jwt').ExtractJwt;
+const mongoose = require('mongoose');
+const Customer = mongoose.model('customers');
+const getConfigs = require('../config/getConfigs');
+const keys = require('./keys.js');
 
 module.exports = async passport => {
   const opts = {};
@@ -12,7 +12,7 @@ module.exports = async passport => {
   opts.secretOrKey = keys.secretOrKey;
 
   passport.use(
-    "jwt",
+    'jwt',
     new JwtStrategy(opts, (jwt_payload, done) => {
       Customer.findById(jwt_payload.id)
         .then(customer => {
@@ -21,12 +21,16 @@ module.exports = async passport => {
           }
           return done(null, false);
         })
-        .catch(err => console.log(err));
+        .catch(err =>
+          res.status(401).json({
+            message: `Пользователь не авторизован`,
+          })
+        );
     })
   );
 
   passport.use(
-    "jwt-admin",
+    'jwt-admin',
     new JwtStrategy(opts, (jwt_payload, done) => {
       Customer.findById(jwt_payload.id)
         .then(customer => {
@@ -34,7 +38,7 @@ module.exports = async passport => {
             return done(null, customer);
           }
           return done(null, false, {
-            message: "You have not enough permissions for this operation"
+            message: 'You have not enough permissions for this operation',
           });
         })
         .catch(err => console.log(err));
