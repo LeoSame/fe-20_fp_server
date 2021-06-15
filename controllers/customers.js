@@ -274,7 +274,7 @@ exports.forgotPassword = (req, res, next) => {
         return res.status(400).json(errors);
       }
 
-      const token = await argon2.hash(req.body.email);
+      const token = jwt.sign({ foo: 'bar' }, 'shhhhh');
 
       Customer.findOneAndUpdate(
         { email: req.body.email },
