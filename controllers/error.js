@@ -11,7 +11,7 @@ exports.addError = (req, res, next) => {
     .then(error => res.json(error))
     .catch(err =>
       res.status(400).json({
-        message: `Error happened on server: "${err}" `,
+        message: `Произошла ошибка на сервере: "${err}" `,
       })
     );
 };
@@ -19,19 +19,19 @@ exports.addError = (req, res, next) => {
 exports.deleteError = (req, res, next) => {
   Error.findOne({ _id: req.params.id }).then(async error => {
     if (!error) {
-      return res.status(400).json({ message: `Error with _id "${req.params.id}" is not found.` });
+      return res.status(400).json({ message: `Ошибка с id "${req.params.id}" не найдена.` });
     } else {
       const errorToDelete = await Error.findOne({ _id: req.params.id });
 
       Error.deleteOne({ _id: req.params.id })
         .then(deletedCount =>
           res.status(200).json({
-            message: `Error witn name "${errorToDelete.message}" is successfully deletes from DB `,
+            message: `Ошибка с id "${errorToDelete.message}" успешно удалена из БД `,
           })
         )
         .catch(err =>
           res.status(400).json({
-            message: `Error happened on server: "${err}" `,
+            message: `Произошла ошибка на сервере: "${err}" `,
           })
         );
     }
@@ -43,7 +43,7 @@ exports.getErrors = (req, res, next) => {
     .then(errors => res.json(errors))
     .catch(err =>
       res.status(400).json({
-        message: `Error happened on server: "${err}" `,
+        message: `Произошла ошибка на сервере: "${err}" `,
       })
     );
 };

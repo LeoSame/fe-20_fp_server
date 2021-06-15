@@ -5,7 +5,7 @@ const _ = require('lodash');
 exports.addBrand = (req, res, next) => {
   Brand.findOne({ name: req.body.name }).then(brand => {
     if (brand) {
-      return res.status(400).json({ message: `Brand with name "${brand.name}" already exists` });
+      return res.status(400).json({ message: `Бренд с названием "${brand.name}" уже существует` });
     } else {
       const initialQuery = _.cloneDeep(req.body);
       const newBrand = new Brand(queryCreator(initialQuery));
@@ -15,7 +15,7 @@ exports.addBrand = (req, res, next) => {
         .then(brand => res.json(brand))
         .catch(err =>
           res.status(400).json({
-            message: `Error happened on server: "${err}" `,
+            message: `Произошла ошибка на сервере: "${err}" `,
           })
         );
     }
@@ -26,7 +26,7 @@ exports.updateBrand = (req, res, next) => {
   Brand.findOne({ _id: req.params.id })
     .then(brand => {
       if (!brand) {
-        return res.status(400).json({ message: `Brand with _id "${req.params.id}" is not found.` });
+        return res.status(400).json({ message: `Бренд с id "${req.params.id}" не найден.` });
       } else {
         const initialQuery = _.cloneDeep(req.body);
         const updatedBrand = queryCreator(initialQuery);
@@ -35,14 +35,14 @@ exports.updateBrand = (req, res, next) => {
           .then(brand => res.json(brand))
           .catch(err =>
             res.status(400).json({
-              message: `Error happened on server: "${err}" `,
+              message: `Произошла ошибка на сервере: "${err}" `,
             })
           );
       }
     })
     .catch(err =>
       res.status(400).json({
-        message: `Error happened on server: "${err}" `,
+        message: `Произошла ошибка на сервере: "${err}" `,
       })
     );
 };
@@ -50,19 +50,19 @@ exports.updateBrand = (req, res, next) => {
 exports.deleteBrand = (req, res, next) => {
   Brand.findOne({ _id: req.params.id }).then(async brand => {
     if (!brand) {
-      return res.status(400).json({ message: `Brand with _id "${req.params.id}" is not found.` });
+      return res.status(400).json({ message: `Бренд с id "${req.params.id}" не найден.` });
     } else {
       const brandToDelete = await Brand.findOne({ _id: req.params.id });
 
       Brand.deleteOne({ _id: req.params.id })
         .then(deletedCount =>
           res.status(200).json({
-            message: `Brand witn name "${brandToDelete.name}" is successfully deletes from DB `,
+            message: `Бренд с названием "${brandToDelete.name}" успешно удален из БД `,
           })
         )
         .catch(err =>
           res.status(400).json({
-            message: `Error happened on server: "${err}" `,
+            message: `Произошла ошибка на сервере: "${err}" `,
           })
         );
     }
@@ -74,7 +74,7 @@ exports.getBrands = (req, res, next) => {
     .then(brands => res.json(brands))
     .catch(err =>
       res.status(400).json({
-        message: `Error happened on server: "${err}" `,
+        message: `Произошла ошибка на сервере: "${err}" `,
       })
     );
 };

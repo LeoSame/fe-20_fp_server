@@ -282,8 +282,11 @@ exports.forgotPassword = (req, res, next) => {
       )
         .populate('customerId')
         .then(async customer => {
-          const letterSubject = 'Вы дествительно забыли пароль?';
-          const letterHtml = `<div>Вот ${req.headers.host} Ваш Токен! ${token}</div>`;
+          const letterSubject = `Восстановления пароля на сайте ${req.headers.host}`;
+          const letterHtml = `<div>
+          <a href="https://${req.headers.host}/reset/${token}" target="_blank" rel="noreferrer noopener">Восстановить пароль </a>
+          от вашего профиля на сайте ${req.headers.host}. Если вы не запрашивали восстановление пароля, проигнорируйте это письмо
+          </div>`;
 
           const mailResult = await sendMail(req.body.email, letterSubject, letterHtml, res);
 
@@ -291,7 +294,7 @@ exports.forgotPassword = (req, res, next) => {
         })
         .catch(err =>
           res.status(400).json({
-            message: `Error happened on server: "${err}" `,
+            message: `Произошла ошибка на сервере: "${err}" `,
           })
         );
     }
@@ -348,38 +351,6 @@ exports.resetPassword = (req, res, next) => {
               );
           });
         });
-
-        // bcrypt.genSalt(10, (err, salt) => {
-        //   bcrypt.hash(req.body.password, salt, (err, hash) => {
-        //     if (err) {
-        //       res.status(400).json({ message: `Ошибка на сервере: ${err}` });
-        //       return;
-        //     }
-        //     newPassword = hash;
-        // Customer.findOneAndUpdate(
-        //   { resetPasswordToken: req.params.token, resetPasswordExpires: { $gt: Date.now() } },
-        //   {
-        //     $set: {
-        //       password: newPassword,
-        //       resetPasswordToken: null,
-        //       resetPasswordExpires: null,
-        //     },
-        //   },
-        //   { new: true }
-        // )
-        //   .then(customer => {
-        //     res.json({
-        //       message: 'Пароль успешно изменен',
-        //       customer: customer,
-        //     });
-        //   })
-        //   .catch(err =>
-        //     res.status(400).json({
-        //       message: `Ошибка на сервере: "${err}" `,
-        //     })
-        //   );
-        //   });
-        // });
       }
     }
   );

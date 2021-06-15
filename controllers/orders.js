@@ -36,7 +36,7 @@ exports.placeOrder = async (req, res, next) => {
     }
 
     if (!req.body.products && cartProducts.length < 1) {
-      res.status(400).json({ message: 'The list of products is required, but absent!' });
+      res.status(400).json({ message: 'Перечень товаров обязателен, но отсутствует!' });
     }
 
     if (cartProducts.length > 0) {
@@ -54,7 +54,7 @@ exports.placeOrder = async (req, res, next) => {
 
     if (!productAvailibilityInfo.productsAvailibilityStatus) {
       res.json({
-        message: 'Some of your products are unavailable for now',
+        message: 'Некоторые из ваших товаров сейчас недоступны',
         productAvailibilityInfo,
       });
     } else {
@@ -72,14 +72,14 @@ exports.placeOrder = async (req, res, next) => {
       if (!letterSubject) {
         return res.status(400).json({
           message:
-            "This operation involves sending a letter to the client. Please provide field 'letterSubject' for the letter.",
+            "Эта операция предполагает отправку письма клиенту. Пожалуйста, укажите для письма поле 'letterSubject'.",
         });
       }
 
       if (!letterHtml) {
         return res.status(400).json({
           message:
-            "This operation involves sending a letter to the client. Please provide field 'letterHtml' for the letter.",
+            "Эта операция предполагает отправку письма клиенту. Пожалуйста, укажите для письма поле 'letterHtml'.",
         });
       }
 
@@ -103,13 +103,13 @@ exports.placeOrder = async (req, res, next) => {
         })
         .catch(err =>
           res.status(400).json({
-            message: `Error happened on server: "${err}" `,
+            message: `Произошла ошибка на сервере: "${err}" `,
           })
         );
     }
   } catch (err) {
     res.status(400).json({
-      message: `Error happened on server: "${err}" `,
+      message: `Произошла ошибка на сервере: "${err}" `,
     });
   }
 };
@@ -117,7 +117,7 @@ exports.placeOrder = async (req, res, next) => {
 exports.updateOrder = (req, res, next) => {
   Order.findOne({ _id: req.params.id }).then(async currentOrder => {
     if (!currentOrder) {
-      return res.status(400).json({ message: `Order with id ${req.params.id} is not found` });
+      return res.status(400).json({ message: `Заказать с id ${req.params.id} не найден` });
     } else {
       const order = _.cloneDeep(req.body);
 
@@ -149,7 +149,7 @@ exports.updateOrder = (req, res, next) => {
 
         if (!productAvailibilityInfo.productsAvailibilityStatus) {
           res.json({
-            message: 'Some of your products are unavailable for now',
+            message: 'Некоторые из ваших товаров сейчас недоступны',
             productAvailibilityInfo,
           });
         }
@@ -169,14 +169,14 @@ exports.updateOrder = (req, res, next) => {
       if (!letterSubject) {
         return res.status(400).json({
           message:
-            "This operation involves sending a letter to the client. Please provide field 'letterSubject' for the letter.",
+            "Эта операция предполагает отправку письма клиенту. Пожалуйста, укажите для письма поле 'letterSubject'.",
         });
       }
 
       if (!letterHtml) {
         return res.status(400).json({
           message:
-            "This operation involves sending a letter to the client. Please provide field 'letterHtml' for the letter.",
+            "Эта операция предполагает отправку письма клиенту. Пожалуйста, укажите для письма поле 'letterHtml'.",
         });
       }
 
@@ -189,7 +189,7 @@ exports.updateOrder = (req, res, next) => {
         })
         .catch(err =>
           res.status(400).json({
-            message: `Error happened on server: "${err}" `,
+            message: `Произошла ошибка на сервере: "${err}" `,
           })
         );
     }
@@ -199,7 +199,7 @@ exports.updateOrder = (req, res, next) => {
 exports.changeStatus = (req, res, next) => {
   Order.findOne({ _id: req.params.id }).then(async currentOrder => {
     if (!currentOrder) {
-      return res.status(400).json({ message: `Order with id ${req.params.id} is not found` });
+      return res.status(400).json({ message: `Заказать с id ${req.params.id} не найден` });
     } else {
       const order = _.cloneDeep(req.body);
 
@@ -217,7 +217,7 @@ exports.changeStatus = (req, res, next) => {
         })
         .catch(err =>
           res.status(400).json({
-            message: `Error happened on server: "${err}" `,
+            message: `Произошла ошибка на сервере: "${err}" `,
           })
         );
     }
@@ -227,7 +227,7 @@ exports.changeStatus = (req, res, next) => {
 exports.cancelOrder = (req, res, next) => {
   Order.findOne({ _id: req.params.id }).then(async currentOrder => {
     if (!currentOrder) {
-      return res.status(400).json({ message: `Order with id ${req.params.id} is not found` });
+      return res.status(400).json({ message: `Заказать с id ${req.params.id} не найден` });
     } else {
       const subscriberMail = req.body.email;
       const letterSubject = req.body.letterSubject;
@@ -243,14 +243,14 @@ exports.cancelOrder = (req, res, next) => {
       if (!letterSubject) {
         return res.status(400).json({
           message:
-            "This operation involves sending a letter to the client. Please provide field 'letterSubject' for the letter.",
+            "Эта операция предполагает отправку письма клиенту. Пожалуйста, укажите для письма поле 'letterSubject'.",
         });
       }
 
       if (!letterHtml) {
         return res.status(400).json({
           message:
-            "This operation involves sending a letter to the client. Please provide field 'letterHtml' for the letter.",
+            "Эта операция предполагает отправку письма клиенту. Пожалуйста, укажите для письма поле 'letterHtml'.",
         });
       }
 
@@ -263,7 +263,7 @@ exports.cancelOrder = (req, res, next) => {
         })
         .catch(err =>
           res.status(400).json({
-            message: `Error happened on server: "${err}" `,
+            message: `Произошла ошибка на сервере: "${err}" `,
           })
         );
     }
@@ -273,19 +273,19 @@ exports.cancelOrder = (req, res, next) => {
 exports.deleteOrder = (req, res, next) => {
   Order.findOne({ _id: req.params.id }).then(async order => {
     if (!order) {
-      return res.status(400).json({ message: `Order with id ${req.params.id} is not found.` });
+      return res.status(400).json({ message: `Заказать с id ${req.params.id} не найден.` });
     } else {
       const orderToDelete = await Order.findOne({ _id: req.params.id });
 
       Order.deleteOne({ _id: req.params.id })
         .then(deletedCount =>
           res.status(200).json({
-            message: `Order witn id "${orderToDelete._id}" is successfully deletes from DB. Order Details: ${orderToDelete}`,
+            message: `Заказ c id "${orderToDelete._id}" успешно удален из БД. Информация о заказе: ${orderToDelete}`,
           })
         )
         .catch(err =>
           res.status(400).json({
-            message: `Error happened on server: "${err}" `,
+            message: `Произошла ошибка на сервере: "${err}" `,
           })
         );
     }
@@ -298,7 +298,7 @@ exports.getCustommerOrders = (req, res, next) => {
     .then(orders => res.json(orders))
     .catch(err =>
       res.status(400).json({
-        message: `Error happened on server: "${err}" `,
+        message: `Произошла ошибка на сервере: "${err}" `,
       })
     );
 };
@@ -325,7 +325,7 @@ exports.getAllOrders = async (req, res, next) => {
     res.json({ orders, ordersQuantity: ordersQuantity.length });
   } catch (err) {
     res.status(400).json({
-      message: `Error happened on server: "${err}" `,
+      message: `Произошла ошибка на сервере: "${err}" `,
     });
   }
 };
@@ -336,7 +336,7 @@ exports.getOrder = (req, res, next) => {
     .then(order => res.json(order))
     .catch(err =>
       res.status(400).json({
-        message: `Error happened on server: "${err}" `,
+        message: `Произошла ошибка на сервере: "${err}" `,
       })
     );
 };

@@ -14,7 +14,7 @@ exports.addComment = (req, res, next) => {
     .then(comment => res.json(comment))
     .catch(err =>
       res.status(400).json({
-        message: `Error happened on server: "${err}" `,
+        message: `Произошла ошибка на сервере: "${err}" `,
       })
     );
 };
@@ -24,7 +24,7 @@ exports.updateComment = (req, res, next) => {
     .then(comment => {
       if (!comment) {
         return res.status(400).json({
-          message: `Comment with _id "${req.params.id}" is not found.`,
+          message: `Комментарий с id "${req.params.id}" не найден.`,
         });
       } else {
         const commentData = _.cloneDeep(req.body);
@@ -37,14 +37,14 @@ exports.updateComment = (req, res, next) => {
           .then(comment => res.json(comment))
           .catch(err =>
             res.status(400).json({
-              message: `Error happened on server: "${err}" `,
+              message: `Произошла ошибка на сервере: "${err}" `,
             })
           );
       }
     })
     .catch(err =>
       res.status(400).json({
-        message: `Error happened on server: "${err}" `,
+        message: `Произошла ошибка на сервере: "${err}" `,
       })
     );
 };
@@ -53,7 +53,7 @@ exports.deleteComment = (req, res, next) => {
   Comment.findOne({ _id: req.params.id }).then(async comment => {
     if (!comment) {
       return res.status(400).json({
-        message: `Comment with id "${req.params.id}" is not found.`,
+        message: `Комментарий с id "${req.params.id}" не найден.`,
       });
     } else {
       const commentToDelete = await Comment.findOne({
@@ -63,13 +63,13 @@ exports.deleteComment = (req, res, next) => {
       Comment.deleteOne({ _id: req.params.id })
         .then(deletedCount =>
           res.status(200).json({
-            message: `Comment witn id "${commentToDelete._id}" is successfully deletes from DB.`,
+            message: `Комментарий с id "${commentToDelete._id}" успешно удален из БД.`,
             deletedCommentInfo: commentToDelete,
           })
         )
         .catch(err =>
           res.status(400).json({
-            message: `Error happened on server: "${err}" `,
+            message: `Произошла ошибка на сервере: "${err}" `,
           })
         );
     }
@@ -84,7 +84,7 @@ exports.getComments = (req, res, next) => {
     .then(comments => res.status(200).json(comments))
     .catch(err =>
       res.status(400).json({
-        message: `Error happened on server: "${err}" `,
+        message: `Произошла ошибка на сервере: "${err}" `,
       })
     );
 };
@@ -97,7 +97,7 @@ exports.getCustomerComments = (req, res, next) => {
     .then(comments => res.status(200).json(comments))
     .catch(err =>
       res.status(400).json({
-        message: `Error happened on server: "${err}" `,
+        message: `Произошла ошибка на сервере: "${err}" `,
       })
     );
 };
@@ -111,7 +111,7 @@ exports.getProductComments = (req, res, next) => {
     .then(comments => res.status(200).json(comments))
     .catch(err =>
       res.status(400).json({
-        message: `Error happened on server: "${err}" `,
+        message: `Произошла ошибка на сервере: "${err}" `,
       })
     );
 };

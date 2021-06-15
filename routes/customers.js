@@ -38,14 +38,14 @@ router.put('/', passport.authenticate('jwt', { session: false }), editCustomerIn
 // @access  Private
 router.put('/password', passport.authenticate('jwt', { session: false }), updatePassword);
 
-// @route   POST /customers/profile/update-password
-// @desc    Return current customer and success or error message
-// @access  Private
+// @route   POST /customers/profile/forgot-password
+// @desc    Email a link to reset your password
+// @access  Public
 router.post('/forgot', forgotPassword);
 
-// @route   POST /customers/profile/update-password
-// @desc    Return current customer and success or error message
-// @access  Private
+// @route   POST /customers/profile/reset-password
+// @desc    Password reset
+// @access  Public
 router.post('/reset/:token', resetPassword);
 
 module.exports = router;

@@ -1,12 +1,12 @@
-const Filter = require("../models/Filter");
-const queryCreator = require("../commonHelpers/queryCreator");
-const _ = require("lodash");
+const Filter = require('../models/Filter');
+const queryCreator = require('../commonHelpers/queryCreator');
+const _ = require('lodash');
 
 exports.addFilter = (req, res, next) => {
   Filter.findOne({ name: req.body.name, type: req.body.type }).then(filter => {
     if (filter) {
       return res.status(400).json({
-        message: `Filter with type "${filter.type}" and name "${filter.name}" already exists`
+        message: `Фильтр с типом "${filter.type}" и именем "${filter.name}" не найден`,
       });
     } else {
       const initialQuery = _.cloneDeep(req.body);
@@ -17,7 +17,7 @@ exports.addFilter = (req, res, next) => {
         .then(filter => res.json(filter))
         .catch(err =>
           res.status(400).json({
-            message: `Error happened on server: "${err}" `
+            message: `Произошла ошибка на сервере: "${err}" `,
           })
         );
     }
@@ -28,31 +28,25 @@ exports.updateFilter = (req, res, next) => {
   Filter.findOne({ _id: req.params.id })
     .then(filter => {
       if (!filter) {
-        return res
-          .status(400)
-          .json({
-            message: `Filter with _id "${req.params.id}" is not found.`
-          });
+        return res.status(400).json({
+          message: `Фильтр с id "${req.params.id}" не найден.`,
+        });
       } else {
         const initialQuery = _.cloneDeep(req.body);
         const updatedFilter = queryCreator(initialQuery);
 
-        Filter.findOneAndUpdate(
-          { _id: req.params.id },
-          { $set: updatedFilter },
-          { new: true }
-        )
+        Filter.findOneAndUpdate({ _id: req.params.id }, { $set: updatedFilter }, { new: true })
           .then(filter => res.json(filter))
           .catch(err =>
             res.status(400).json({
-              message: `Error happened on server: "${err}" `
+              message: `Произошла ошибка на сервере: "${err}" `,
             })
           );
       }
     })
     .catch(err =>
       res.status(400).json({
-        message: `Error happened on server: "${err}" `
+        message: `Произошла ошибка на сервере: "${err}" `,
       })
     );
 };
@@ -60,21 +54,19 @@ exports.updateFilter = (req, res, next) => {
 exports.deleteFilter = (req, res, next) => {
   Filter.findOne({ _id: req.params.id }).then(async filter => {
     if (!filter) {
-      return res
-        .status(400)
-        .json({ message: `Filter with _id "${req.params.id}" is not found.` });
+      return res.status(400).json({ message: `Фильтер с id "${req.params.id}" не найден.` });
     } else {
       const filterToDelete = await Filter.findOne({ _id: req.params.id });
 
       Filter.deleteOne({ _id: req.params.id })
         .then(deletedCount =>
           res.status(200).json({
-            message: `Filter witn type "${filterToDelete.type}" and name "${filterToDelete.name}" is successfully deletes from DB `
+            message: `Фильтер с типом "${filterToDelete.type}" и именем "${filterToDelete.name}" успешно удален из БД `,
           })
         )
         .catch(err =>
           res.status(400).json({
-            message: `Error happened on server: "${err}" `
+            message: `Произошла ошибка на сервере: "${err}" `,
           })
         );
     }
@@ -86,7 +78,7 @@ exports.getFilters = (req, res, next) => {
     .then(filters => res.json(filters))
     .catch(err =>
       res.status(400).json({
-        message: `Error happened on server: "${err}" `
+        message: `Произошла ошибка на сервере: "${err}" `,
       })
     );
 };
@@ -96,7 +88,7 @@ exports.getFiltersByType = (req, res, next) => {
     .then(filters => res.json(filters))
     .catch(err =>
       res.status(400).json({
-        message: `Error happened on server: "${err}" `
+        message: `Произошла ошибка на сервере: "${err}" `,
       })
     );
 };
