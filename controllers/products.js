@@ -165,3 +165,23 @@ exports.searchProducts = async (req, res, next) => {
 
   res.send(matchedProducts);
 };
+
+exports.getProductByColor = (req, res, next) => {
+  Product.find({
+    descForColor: req.body.descForColor,
+  })
+    .then(async products => {
+      if (!products) {
+        res.status(400).json({
+          message: `Продукты типа ${req.body.descForColor} не найдены`,
+        });
+      } else {
+        res.json(products);
+      }
+    })
+    .catch(err =>
+      res.status(400).json({
+        message: `Произошла ошибка на сервере: "${err}" `,
+      })
+    );
+};
