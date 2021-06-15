@@ -4,7 +4,6 @@ const _ = require('lodash');
 const keys = require('../config/keys');
 const sendMail = require('../commonHelpers/mailSender');
 const getConfigs = require('../config/getConfigs');
-const argon2 = require('argon2');
 const passport = require('passport');
 const uniqueRandom = require('unique-random');
 const rand = uniqueRandom(10000000, 99999999);
@@ -306,8 +305,7 @@ exports.resetPassword = (req, res, next) => {
     async customer => {
       if (!customer) {
         return res.status(400).json({
-          message: `Токен сброса пароля недействителен или срок его действия истек.`,
-          customer: req.params.token,
+          message: `Токен сброса пароля недействителен.`,
         });
       } else {
         const { errors, isValid } = validateRegistrationForm(req.body);
