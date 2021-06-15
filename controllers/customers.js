@@ -284,7 +284,7 @@ exports.forgotPassword = (req, res, next) => {
         .then(async customer => {
           const letterSubject = `Восстановления пароля на сайте ${req.headers.host}`;
           const letterHtml = `<div>
-          <a href="https://${req.headers.host}/reset/${token}" target="_blank" rel="noreferrer noopener">Восстановить пароль </a>
+          <a href="http://localhost:3000/reset/${token}" target="_blank" rel="noreferrer noopener">Восстановить пароль </a>
           от вашего профиля на сайте ${req.headers.host}. Если вы не запрашивали восстановление пароля, проигнорируйте это письмо
           </div>`;
 
