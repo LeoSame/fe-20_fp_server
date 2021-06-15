@@ -78,14 +78,14 @@ router.get('/filter', getProductsFilterParams);
 // @access  Public
 router.post('/search', searchProducts);
 
-// @route   GET /products/color
-// @desc    GET appropriate filtered products by color
-// @access  Public
-router.get('/color', getProductByColor);
-
 // @route   GET /products/:id
 // @desc    GET existing product by id
 // @access  Public
 router.get('/:itemNo', getProductById);
+
+// @route   GET /products/color
+// @desc    GET appropriate filtered products by color
+// @access  Public
+router.post('/color', getProductByColor);
 
 module.exports = router;
