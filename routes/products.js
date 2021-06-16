@@ -14,6 +14,7 @@ const {
   getProductsFilterParams,
   searchProducts,
   getProductByColor,
+  getProductsByArrayId,
 } = require('../controllers/products');
 
 // Configurations for multer
@@ -83,9 +84,14 @@ router.post('/search', searchProducts);
 // @access  Public
 router.get('/:itemNo', getProductById);
 
-// @route   GET /products/color
-// @desc    GET appropriate filtered products by color
+// @route   POST /products/color
+// @desc    POST appropriate filtered products by color
 // @access  Public
 router.post('/color', getProductByColor);
+
+// @route   POST /products/array
+// @desc    POST appropriate filtered products by array id
+// @access  Public
+router.post('/array', getProductsByArrayId);
 
 module.exports = router;

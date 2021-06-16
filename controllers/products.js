@@ -185,3 +185,23 @@ exports.getProductByColor = (req, res, next) => {
       })
     );
 };
+
+exports.getProductsByArrayId = (req, res, next) => {
+  Product.find({
+    itemNo: req.body.itemNo,
+  })
+    .then(async products => {
+      if (!products) {
+        res.status(400).json({
+          message: `Продукты ${req.body.itemNo} не найдены`,
+        });
+      } else {
+        res.json(products);
+      }
+    })
+    .catch(err =>
+      res.status(400).json({
+        message: `Произошла ошибка на сервере: "${err}" `,
+      })
+    );
+};
