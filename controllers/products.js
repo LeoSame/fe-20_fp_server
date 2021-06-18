@@ -196,7 +196,11 @@ exports.getProductsByArrayId = (req, res, next) => {
           message: `Продукты ${req.body.itemNo} не найдены`,
         });
       } else {
-        res.json(products);
+        const sortProducts = products.sort(function (a, b) {
+          return req.body.itemNo.indexOf(a.itemNo) - req.body.itemNo.indexOf(b.itemNo);
+        });
+
+        res.json(sortProducts);
       }
     })
     .catch(err =>
