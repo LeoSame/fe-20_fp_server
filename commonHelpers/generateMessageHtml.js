@@ -26,10 +26,10 @@ const header = (firstName, lastName) => {
 };
 
 module.exports = function messageForgotPassword(customer, token) {
-  const header = header(customer.firstName, customer.lastName);
+  const headers = header(customer.firstName, customer.lastName);
   const message = `<div style="font-size:18px;padding-bottom:15px;line-height:1.1;font-family:Arial, sans-serif;">
   <a href="https://smart-electronix.herokuapp.com/reset/${token}" target="_blank" rel="noreferrer noopener">Восстановить пароль </a>
   от вашего профиля на сайте smart-electronix.herokuapp.com. Если вы не запрашивали восстановление пароля, проигнорируйте это письмо
   </div>`;
-  return `${header}${message}`;
+  return `${headers}${message}`;
 };
