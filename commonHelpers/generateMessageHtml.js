@@ -25,7 +25,7 @@ const header = (firstName, lastName) => {
   return header;
 };
 
-exports.messageForgotPassword = (customer, token) => {
+module.exports = function messageForgotPassword(customer, token) {
   const header = header(customer.firstName, customer.lastName);
   const message = `<div style="font-size:18px;padding-bottom:15px;line-height:1.1;font-family:Arial, sans-serif;">
   <a href="https://smart-electronix.herokuapp.com/reset/${token}" target="_blank" rel="noreferrer noopener">Восстановить пароль </a>
