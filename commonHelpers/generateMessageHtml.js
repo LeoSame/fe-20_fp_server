@@ -599,7 +599,7 @@ module.exports = function messageForgotPassword(customer, token) {
                   <tr style="border-collapse: collapse">
                     <td
                       align="center"
-                      style="padding: 0; margin: 0; padding-top: 5px; padding-bottom: 5px; font-size: 0"
+                      style="padding: 0; margin: 0; padding-top: 5px;  font-size: 0"
                     >
                       <img
                         src="https://ruexbf.stripocdn.email/content/guids/CABINET_dd354a98a803b60e2f0411e893c82f56/images/23891556799905703.png"
@@ -802,7 +802,7 @@ module.exports = function messageAddOrder(order) {
                           <tbody>
                             <tr>
                               <td style="margin: 0">
-                                <p style=" color: #666666; font-size: 16px">
+                                <p style="margin: 0; color: #666666; font-size: 16px">
                                 <a href="https://smart-electronix.herokuapp.com/product/${
                                   p.product.itemNo
                                 }" target="_blank">
@@ -811,10 +811,10 @@ module.exports = function messageAddOrder(order) {
                                 </p>
                               </td>
                               <td style="text-align: center" width="15%">
-                                <p style=" color: #666666; font-size: 16px">${p.cartQuantity}</p>
+                                <p style="margin: 0; color: #666666; font-size: 16px">${p.cartQuantity}</p>
                               </td>
                               <td style="text-align: center" width="30%">
-                                <p style=" color: #666666; font-size: 16px">${
+                                <p style="margin: 0; color: #666666; font-size: 16px">${
                                   p.cartQuantity * p.product.currentPrice
                                 }&nbsp;грн.</p>
                               </td>
@@ -851,7 +851,7 @@ module.exports = function messageAddOrder(order) {
                   <tbody>
                     <tr>
                       <td align="left" style="padding-bottom: 5px">
-                        <p style=" color: #38761d; font-size: 16px">
+                        <p style="margin: 0; color: #38761d; font-size: 16px">
                           Заказ&nbsp;
                           <span>${order.orderNo}</span>
                         </p>
@@ -876,7 +876,7 @@ module.exports = function messageAddOrder(order) {
                     </tr>
                     <tr>
                       <td align="left">
-                        <p style="line-height: 27px; color: #999999; font-size: 18px">
+                        <p style="margin: 0; line-height: 27px; color: #999999; font-size: 18px">
                           Мы свяжемся с Вами сегодня для уточнения заказа.
                         </p>
                       </td>
@@ -908,7 +908,7 @@ module.exports = function messageAddOrder(order) {
                   <tbody>
                     <tr>
                       <td align="left" style="margin: 0">
-                        <p style=" color: #666666; font-size: 16px">
+                        <p style="margin: 0; color: #666666; font-size: 16px">
                           <b> ТОВАР </b>
                         </p>
                       </td>
@@ -931,17 +931,17 @@ module.exports = function messageAddOrder(order) {
                           <tbody>
                             <tr>
                               <td style="font-size: 13px">
-                                <p style=" color: #666666; font-size: 16px">
+                                <p style="margin: 0; color: #666666; font-size: 16px">
                                   <strong> НАЗВАНИЕ </strong>
                                 </p>
                               </td>
                               <td style="text-align: center; font-size: 13px; line-height: 13px" width="15%">
-                                <p style=" color: #666666; font-size: 16px">
+                                <p style="margin: 0; color: #666666; font-size: 16px">
                                   <strong> К-ВО </strong>
                                 </p>
                               </td>
                               <td style="text-align: center; font-size: 13px; line-height: 13px" width="30%">
-                                <p style=" color: #666666; font-size: 16px">
+                                <p style="margin: 0; color: #666666; font-size: 16px">
                                   <strong> ЦЕНА </strong>
                                 </p>
                               </td>
@@ -969,7 +969,7 @@ module.exports = function messageAddOrder(order) {
                     <tr>
                       <td
                         align="center"
-                        style="padding-top: 5px; padding-bottom: 5px; padding-left: 20px; padding-right: 20px"
+                        style="padding-top: 5px;  padding-left: 20px; padding-right: 20px"
                       >
                         <table width="100%" height="100%" style="border-spacing: 0px">
                           <tbody>
@@ -1012,7 +1012,7 @@ module.exports = function messageAddOrder(order) {
                         align="center"
                         style="
                           padding-top: 5px;
-                          padding-bottom: 5px;
+                          
                           padding-left: 20px;
                           padding-right: 20px;
                           font-size: 0px;
@@ -1040,8 +1040,8 @@ module.exports = function messageAddOrder(order) {
                         align="left"
                         style="padding-top: 10px; padding-bottom: 10px; padding-right: 10px; padding-left: 20px"
                       >
-                        <p style=" color: #666666; font-size: 16px">Информация о доставке:</p>
-                        <p style=" color: #666666; font-size: 16px">
+                        <p style="margin: 0; color: #666666; font-size: 16px">Информация о доставке:</p>
+                        <p style="margin: 0; color: #666666; font-size: 16px">
                         E-mail: <span style="font-weight:bold;">${order.email}</span> <br>
                         Мобильный телефон: <span style="font-weight:bold;">${order.mobile}</span> <br>
                         Способ доставки: <span style="font-weight:bold;">${order.deliveryAddress.delivery}</span> <br>
@@ -1074,7 +1074,7 @@ module.exports = function messageAddOrder(order) {
                         align="center"
                         style="
                           padding-top: 5px;
-                          padding-bottom: 5px;
+                          
                           padding-left: 20px;
                           padding-right: 20px;
                           font-size: 0px;
@@ -1119,20 +1119,20 @@ module.exports = function messageAddOrder(order) {
                           <tbody>
                             <tr>
                               <td style="text-align: right; line-height: 150%">
-                                <p style=" color: #666666; font-size: 16px">Цена товаров:</p>
+                                <p style="margin: 0; color: #666666; font-size: 16px">Цена товаров:</p>
                               </td>
                               <td style="text-align: right; font-size: 18px; line-height: 27px">
-                                <p style=" color: #666666; font-size: 16px">${order.totalSum} грн.</p>
+                                <p style="margin: 0; color: #666666; font-size: 16px">${order.totalSum} грн.</p>
                               </td>
                             </tr>
                             <tr>
                               <td style="text-align: right; font-size: 18px; line-height: 27px">
-                                <p style="line-height: 27px; color: #666666; font-size: 18px">
+                                <p style="margin: 0; line-height: 27px; color: #666666; font-size: 18px">
                                   <strong> Цена доставки: </strong>
                                 </p>
                               </td>
                               <td style="text-align: right; font-size: 18px; line-height: 27px; color: #008000">
-                                <p style=" color: #666666; font-size: 16px">
+                                <p style="margin: 0;  color: #666666; font-size: 16px">
                                   <strong> ${
                                     order.deliveryAddress.delivery === 'Курьером по Киеву'
                                       ? '80,00 грн.'
@@ -1203,7 +1203,7 @@ module.exports = function messageAddOrder(order) {
                   <tbody>
                     <tr>
                       <td align="right" style="padding-left: 20px; padding-right: 20px">
-                        <p style="line-height: 10px; color: #666666; font-size: 20px">
+                        <p style="margin: 0; line-height: 10px; color: #666666; font-size: 20px">
                           <strong>
                             Сумма к оплате:
                             <span> ${
