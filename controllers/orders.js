@@ -4,6 +4,7 @@ const Product = require('../models/Product');
 const sendMail = require('../commonHelpers/mailSender');
 const validateOrderForm = require('../validation/validationHelper');
 const queryCreator = require('../commonHelpers/queryCreator');
+const messageAddOrder = require('../commonHelpers/generateMessageHtml');
 const productAvailibilityChecker = require('../commonHelpers/productAvailibilityChecker');
 const subtractProductsFromCart = require('../commonHelpers/subtractProductsFromCart');
 const _ = require('lodash');
@@ -59,28 +60,12 @@ exports.placeOrder = async (req, res, next) => {
       });
     } else {
       const subscriberMail = req.body.email;
-      const letterSubject = req.body.letterSubject;
-      const letterHtml = req.body.letterHtml;
 
       const { errors, isValid } = validateOrderForm(req.body);
 
       // Check Validation
       if (!isValid) {
         return res.status(400).json(errors);
-      }
-
-      if (!letterSubject) {
-        return res.status(400).json({
-          message:
-            "Эта операция предполагает отправку письма клиенту. Пожалуйста, укажите для письма поле 'letterSubject'.",
-        });
-      }
-
-      if (!letterHtml) {
-        return res.status(400).json({
-          message:
-            "Эта операция предполагает отправку письма клиенту. Пожалуйста, укажите для письма поле 'letterHtml'.",
-        });
       }
 
       const newOrder = new Order(order);
@@ -92,6 +77,9 @@ exports.placeOrder = async (req, res, next) => {
       newOrder
         .save()
         .then(async order => {
+          const letterSubject = `Заказ №${order.orderNo} успешно принят!`;
+          const letterHtml = messageAddOrder(order);
+
           const mailResult = await sendMail(subscriberMail, letterSubject, letterHtml, res);
 
           for (item of order.products) {

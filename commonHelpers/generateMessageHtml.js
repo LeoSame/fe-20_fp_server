@@ -757,3 +757,475 @@ module.exports = function messageForgotPassword(customer, token) {
 
   return `${headers}${message}${footers}`;
 };
+
+module.exports = function messageAddOrder(order) {
+  const headers = header();
+  const footers = footer();
+
+  let ordersList = '';
+
+  order.products.map(p => {
+    ordersList += `
+    <tr>
+      <td align="left" style="padding-top: 5px; padding-bottom: 10px; padding-left: 20px; padding-right: 20px">
+        <table align="left" style="border-spacing: 0px; float: left">
+          <tbody>
+            <tr>
+              <td valign="top" align="center" style="width: 170px">
+                <table width="100%" style="border-spacing: 0px">
+                  <tbody>
+                    <tr>
+                      <td align="center" style="font-size: 0px">
+                        <a
+                          href="${url}product/${p.product.itemNo}"
+                          target="_blank"
+                          style="text-decoration: none; color: #0b5394; font-size: 16px"
+                          ><img
+                            src="${p.product.imageUrls[0].smallImage}"
+                            width="120" height="120" alt="product"
+                        /></a>
+                      </td>
+                    </tr>
+                  </tbody>
+                </table>
+              </td>
+            </tr>
+          </tbody>
+        </table>
+        <table align="right" style="border-spacing: 0px">
+          <tbody>
+            <tr>
+              <td align="left" style="width: 370px">
+                <table width="100%" style="border-spacing: 0px">
+                  <tbody>
+                    <tr>
+                      <td align="left" style="padding-top: 15px; padding-bottom: 15px">
+                        <table style="border-spacing: 0px; width: 100%" cellspacing="1" cellpadding="1">
+                          <tbody>
+                            <tr>
+                              <td style="margin: 0">
+                                <p style="line-height: 24px; color: #666666; font-size: 16px">
+                                <a href="${url}product/${p.product.itemNo}" target="_blank">
+                                  <strong> ${p.product.name}, ${p.product.color} </strong>
+                                </a>
+                                </p>
+                              </td>
+                              <td style="text-align: center" width="15%">
+                                <p style="line-height: 24px; color: #666666; font-size: 16px">${p.cartQuantity}</p>
+                              </td>
+                              <td style="text-align: center" width="30%">
+                                <p style="line-height: 24px; color: #666666; font-size: 16px">${
+                                  p.cartQuantity * p.product.currentPrice
+                                }&nbsp;грн.</p>
+                              </td>
+                            </tr>
+                          </tbody>
+                        </table>
+                      </td>
+                    </tr>
+                  </tbody>
+                </table>
+              </td>
+            </tr>
+          </tbody>
+        </table>
+      </td>
+    </tr>
+    `;
+    return null;
+  });
+
+  const message = `
+  <table
+  align="center"
+  style="background-color: #ffffff; width: 600px; font-family: helvetica, 'helvetica neue', arial, verdana, sans-serif"
+>
+  <tbody>
+    <tr>
+      <td style="padding-top: 20px; padding-right: 20px; background-position: center center">
+        <table style="border-spacing: 0px">
+          <tbody>
+            <tr>
+              <td valign="top" align="center" style="width: 560px">
+                <table width="100%" style="border-spacing: 0px">
+                  <tbody>
+                    <tr>
+                      <td align="left" style="padding-bottom: 5px">
+                        <p style="line-height: 24px; color: #38761d; font-size: 16px">
+                          Заказ&nbsp;
+                          <span>${order.orderNo}</span>
+                        </p>
+                      </td>
+                    </tr>
+                    <tr>
+                      <td align="left" style="margin: 0">
+                        <h1
+                          style="
+                            line-height: 24px;
+                            font-family: arial, 'helvetica neue', helvetica, sans-serif;
+                            font-size: 20px;
+                            font-style: normal;
+                            font-weight: normal;
+                            color: #333333;
+                          "
+                        >
+                        ПРИВЕТ,&nbsp;${order.firstName} ${order.lastName}<br/>
+                          Ваш заказ принят.
+                        </h1>
+                      </td>
+                    </tr>
+                    <tr>
+                      <td align="left">
+                        <p style="line-height: 27px; color: #999999; font-size: 18px">
+                          Мы свяжемся с Вами сегодня для уточнения заказа.
+                        </p>
+                      </td>
+                    </tr>
+                  </tbody>
+                </table>
+              </td>
+            </tr>
+          </tbody>
+        </table>
+      </td>
+    </tr>
+    <tr>
+      <td
+        align="left"
+        style="
+          padding-bottom: 10px;
+          padding-top: 20px;
+          padding-left: 20px;
+          padding-right: 20px;
+          background-position: center center;
+        "
+      >
+        <table align="left" style="float: left">
+          <tbody>
+            <tr>
+              <td valign="top" align="center" style="width: 178px">
+                <table width="100%" style="border-spacing: 0px">
+                  <tbody>
+                    <tr>
+                      <td align="left" style="margin: 0">
+                        <p style="line-height: 24px; color: #666666; font-size: 16px">
+                          <b> ТОВАР </b>
+                        </p>
+                      </td>
+                    </tr>
+                  </tbody>
+                </table>
+              </td>
+            </tr>
+          </tbody>
+        </table>
+        <table align="right" style="border-spacing: 0px">
+          <tbody>
+            <tr>
+              <td align="left" style="width: 362px">
+                <table width="100%" style="border-spacing: 0px">
+                  <tbody>
+                    <tr>
+                      <td align="left" style="margin: 0">
+                        <table style="width: 100%" cellspacing="1" cellpadding="1">
+                          <tbody>
+                            <tr>
+                              <td style="font-size: 13px">
+                                <p style="line-height: 24px; color: #666666; font-size: 16px">
+                                  <strong> НАЗВАНИЕ </strong>
+                                </p>
+                              </td>
+                              <td style="text-align: center; font-size: 13px; line-height: 13px" width="15%">
+                                <p style="line-height: 24px; color: #666666; font-size: 16px">
+                                  <strong> К-ВО </strong>
+                                </p>
+                              </td>
+                              <td style="text-align: center; font-size: 13px; line-height: 13px" width="30%">
+                                <p style="line-height: 24px; color: #666666; font-size: 16px">
+                                  <strong> ЦЕНА </strong>
+                                </p>
+                              </td>
+                            </tr>
+                          </tbody>
+                        </table>
+                      </td>
+                    </tr>
+                  </tbody>
+                </table>
+              </td>
+            </tr>
+          </tbody>
+        </table>
+      </td>
+    </tr>
+    <tr>
+      <td align="left" style="margin: 0">
+        <table width="100%" style="border-spacing: 0px">
+          <tbody>
+            <tr>
+              <td align="center" valign="top" style="width: 600px">
+                <table width="100%" style="border-spacing: 0px">
+                  <tbody>
+                    <tr>
+                      <td
+                        align="center"
+                        style="padding-top: 5px; padding-bottom: 5px; padding-left: 20px; padding-right: 20px"
+                      >
+                        <table width="100%" height="100%" style="border-spacing: 0px">
+                          <tbody>
+                            <tr>
+                              <td
+                                style="
+                                  border-bottom: 1px solid #cccccc;
+                                  background: none;
+                                  height: 1px;
+                                  width: 100%;
+                                  margin: 0px;
+                                "
+                              ></td>
+                            </tr>
+                          </tbody>
+                        </table>
+                      </td>
+                    </tr>
+                  </tbody>
+                </table>
+              </td>
+            </tr>
+          </tbody>
+        </table>
+      </td>
+    </tr>
+    
+  ${ordersList}
+
+    <tr>
+      <td align="left" style="padding-top: 5px; padding-bottom: 5px">
+        <table width="100%" style="border-spacing: 0px">
+          <tbody>
+            <tr>
+              <td align="center" valign="top" style="width: 600px">
+                <table width="100%" style="border-spacing: 0px">
+                  <tbody>
+                    <tr>
+                      <td
+                        align="center"
+                        style="
+                          padding-top: 5px;
+                          padding-bottom: 5px;
+                          padding-left: 20px;
+                          padding-right: 20px;
+                          font-size: 0px;
+                        "
+                      >
+                        <table width="100%" height="100%" style="border-spacing: 0px">
+                          <tbody>
+                            <tr>
+                              <td
+                                style="
+                                  border-bottom: 1px solid #cccccc;
+                                  background: none;
+                                  height: 1px;
+                                  width: 100%;
+                                  margin: 0px;
+                                "
+                              ></td>
+                            </tr>
+                          </tbody>
+                        </table>
+                      </td>
+                    </tr>
+                    <tr>
+                      <td
+                        align="left"
+                        style="padding-top: 10px; padding-bottom: 10px; padding-right: 10px; padding-left: 20px"
+                      >
+                        <p style="line-height: 24px; color: #666666; font-size: 16px">Информация о доставке:</p>
+                        <p style="line-height: 24px; color: #666666; font-size: 16px">
+                        E-mail: <span style="font-weight:bold;">${order.email}</span> <br>
+                        Мобильный телефон: <span style="font-weight:bold;">${order.mobile}</span> <br>
+                        Способ доставки: <span style="font-weight:bold;">${order.deliveryAddress.delivery}</span> <br>
+                        Адрес доставки: <span style="font-weight:bold;">
+                        ${order.deliveryAddress.region} обл., г. ${order.deliveryAddress.city}, ${
+    order.deliveryAddress.address
+  }</span> <br>
+                        Способ оплаты: <span style="font-weight:bold;">${order.paymentInfo}</span> <br>
+                        Ваш коментарий: <span style="font-weight:bold;">${order.comment}</span> <br></p>
+                      </td>
+                    </tr>
+                  </tbody>
+                </table>
+              </td>
+            </tr>
+          </tbody>
+        </table>
+      </td>
+    </tr>
+    <tr>
+      <td align="left" style="background-position: center center">
+        <table width="100%" style="border-spacing: 0px">
+          <tbody>
+            <tr>
+              <td align="center" valign="top" style="width: 600px">
+                <table width="100%" style="border-spacing: 0px">
+                  <tbody>
+                    <tr>
+                      <td
+                        align="center"
+                        style="
+                          padding-top: 5px;
+                          padding-bottom: 5px;
+                          padding-left: 20px;
+                          padding-right: 20px;
+                          font-size: 0px;
+                        "
+                      >
+                        <table width="100%" height="100%" style="border-spacing: 0px">
+                          <tbody>
+                            <tr>
+                              <td
+                                style="
+                                  border-bottom: 1px solid #cccccc;
+                                  background: none;
+                                  height: 1px;
+                                  width: 100%;
+                                  margin: 0px;
+                                "
+                              ></td>
+                            </tr>
+                          </tbody>
+                        </table>
+                      </td>
+                    </tr>
+                  </tbody>
+                </table>
+              </td>
+            </tr>
+          </tbody>
+        </table>
+      </td>
+    </tr>
+    <tr>
+      <td align="left" style="padding-top: 5px; padding-left: 20px; padding-right: 40px">
+        <table width="100%" style="border-spacing: 0px">
+          <tbody>
+            <tr>
+              <td valign="top" align="center" style="width: 540px">
+                <table width="100%" style="border-spacing: 0px">
+                  <tbody>
+                    <tr>
+                      <td align="right" style="margin: 0">
+                        <table style="border-spacing: 0px; width: 500px" cellspacing="1" cellpadding="1" align="right">
+                          <tbody>
+                            <tr>
+                              <td style="text-align: right; line-height: 150%">
+                                <p style="line-height: 24px; color: #666666; font-size: 16px">Цена товаров:</p>
+                              </td>
+                              <td style="text-align: right; font-size: 18px; line-height: 27px">
+                                <p style="line-height: 24px; color: #666666; font-size: 16px">${order.totalSum} грн.</p>
+                              </td>
+                            </tr>
+                            <tr>
+                              <td style="text-align: right; font-size: 18px; line-height: 27px">
+                                <p style="line-height: 27px; color: #666666; font-size: 18px">
+                                  <strong> Цена доставки: </strong>
+                                </p>
+                              </td>
+                              <td style="text-align: right; font-size: 18px; line-height: 27px; color: #008000">
+                                <p style="line-height: 24px; color: #666666; font-size: 16px">
+                                  <strong> ${
+                                    order.deliveryAddress.delivery === 'Курьером по Киеву'
+                                      ? '80,00 грн.'
+                                      : order.deliveryAddress.delivery === 'Новой почтой'
+                                      ? 'Согласно тарифам "Новая почта"'
+                                      : 'Бесплатно'
+                                  } </strong>
+                                </p>
+                              </td>
+                            </tr>
+                          </tbody>
+                        </table>
+                      </td>
+                    </tr>
+                  </tbody>
+                </table>
+              </td>
+            </tr>
+          </tbody>
+        </table>
+      </td>
+    </tr>
+    <tr>
+      <td align="left" style="padding-left: 20px; padding-right: 20px">
+        <table width="100%" style="border-spacing: 0px">
+          <tbody>
+            <tr>
+              <td align="center" valign="top" style="width: 560px">
+                <table width="100%" style="border-spacing: 0px">
+                  <tbody>
+                    <tr>
+                      <td align="center" style="padding-top: 10px; padding-bottom: 10px; font-size: 0px">
+                        <table width="100%" height="100%" style="border-spacing: 0px">
+                          <tbody>
+                            <tr>
+                              <td
+                                style="
+                                  border-bottom: 1px solid #cccccc;
+                                  background: none;
+                                  height: 1px;
+                                  width: 100%;
+                                  margin: 0px;
+                                "
+                              ></td>
+                            </tr>
+                          </tbody>
+                        </table>
+                      </td>
+                    </tr>
+                  </tbody>
+                </table>
+              </td>
+            </tr>
+          </tbody>
+        </table>
+      </td>
+    </tr>
+    <tr>
+      <td
+        align="left"
+        style="padding-bottom: 20px; padding-left: 20px; padding-right: 20px; background-position: center top"
+      >
+        <table width="100%" style="border-spacing: 0px">
+          <tbody>
+            <tr>
+              <td align="center" valign="top" style="width: 560px">
+                <table width="100%" style="border-spacing: 0px">
+                  <tbody>
+                    <tr>
+                      <td align="right" style="padding-left: 20px; padding-right: 20px">
+                        <p style="line-height: 30px; color: #666666; font-size: 20px">
+                          <strong>
+                            Сумма к оплате:
+                            <span> ${
+                              order.deliveryAddress.delivery === 'Курьером по Киеву'
+                                ? order.totalSum + 80 + ' грн.'
+                                : order.totalSum + ' грн.'
+                            } грн. </span>
+                          </strong>
+                        </p>
+                      </td>
+                    </tr>
+                  </tbody>
+                </table>
+              </td>
+            </tr>
+          </tbody>
+        </table>
+      </td>
+    </tr>
+  </tbody>
+</table>
+`;
+
+  return `${headers}${message}${footers}`;
+};
