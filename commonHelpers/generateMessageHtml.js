@@ -1211,7 +1211,7 @@ module.exports = function messageAddOrder(order) {
                               order.deliveryAddress.delivery === 'Курьером по Киеву'
                                 ? order.totalSum + 80 + ' грн.'
                                 : order.totalSum + ' грн.'
-                            } грн. </span>
+                            } </span>
                           </strong>
                         </p>
                       </td>
