@@ -4,6 +4,7 @@ const _ = require('lodash');
 const keys = require('../config/keys');
 const sendMail = require('../commonHelpers/mailSender');
 const getConfigs = require('../config/getConfigs');
+const messageForgotPassword = require('../commonHelpers/generateMessageHtml');
 const passport = require('passport');
 const uniqueRandom = require('unique-random');
 const rand = uniqueRandom(10000000, 99999999);
@@ -281,11 +282,8 @@ exports.forgotPassword = (req, res, next) => {
       )
         .populate('customerId')
         .then(async customer => {
-          const letterSubject = `Восстановления пароля на сайте ${req.headers.host}`;
-          const letterHtml = `<div>
-          <a href="http://localhost:3000/reset/${token}" target="_blank" rel="noreferrer noopener">Восстановить пароль </a>
-          от вашего профиля на сайте ${req.headers.host}. Если вы не запрашивали восстановление пароля, проигнорируйте это письмо
-          </div>`;
+          const letterSubject = `Восстановления пароля на сайте smart-electronix.herokuapp.com`;
+          const letterHtml = messageForgotPassword(customer, token);
 
           const mailResult = await sendMail(req.body.email, letterSubject, letterHtml, res);
 
