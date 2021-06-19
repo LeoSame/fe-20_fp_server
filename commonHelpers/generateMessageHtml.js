@@ -765,6 +765,44 @@ module.exports = function messageAddOrder(order) {
   order.products.map(p => {
     ordersList += `
     <tr>
+      <td align="left" style="margin: 0">
+        <table width="100%" style="border-spacing: 0px">
+          <tbody>
+            <tr>
+              <td align="center" valign="top" style="width: 600px">
+                <table width="100%" style="border-spacing: 0px">
+                  <tbody>
+                    <tr>
+                      <td
+                        align="center"
+                        style="padding-top: 5px;  padding-left: 20px; padding-right: 20px"
+                      >
+                        <table width="100%" height="100%" style="border-spacing: 0px">
+                          <tbody>
+                            <tr>
+                              <td
+                                style="
+                                  border-bottom: 1px solid #cccccc;
+                                  background: none;
+                                  height: 1px;
+                                  width: 100%;
+                                  margin: 0px;
+                                "
+                              ></td>
+                            </tr>
+                          </tbody>
+                        </table>
+                      </td>
+                    </tr>
+                  </tbody>
+                </table>
+              </td>
+            </tr>
+          </tbody>
+        </table>
+      </td>
+    </tr>
+    <tr>
       <td align="left" style="padding-top: 5px; padding-bottom: 10px; padding-left: 20px; padding-right: 20px">
         <table align="left" style="border-spacing: 0px; float: left">
           <tbody>
@@ -958,44 +996,7 @@ module.exports = function messageAddOrder(order) {
         </table>
       </td>
     </tr>
-    <tr>
-      <td align="left" style="margin: 0">
-        <table width="100%" style="border-spacing: 0px">
-          <tbody>
-            <tr>
-              <td align="center" valign="top" style="width: 600px">
-                <table width="100%" style="border-spacing: 0px">
-                  <tbody>
-                    <tr>
-                      <td
-                        align="center"
-                        style="padding-top: 5px;  padding-left: 20px; padding-right: 20px"
-                      >
-                        <table width="100%" height="100%" style="border-spacing: 0px">
-                          <tbody>
-                            <tr>
-                              <td
-                                style="
-                                  border-bottom: 1px solid #cccccc;
-                                  background: none;
-                                  height: 1px;
-                                  width: 100%;
-                                  margin: 0px;
-                                "
-                              ></td>
-                            </tr>
-                          </tbody>
-                        </table>
-                      </td>
-                    </tr>
-                  </tbody>
-                </table>
-              </td>
-            </tr>
-          </tbody>
-        </table>
-      </td>
-    </tr>
+    
     
   ${ordersList}
 
