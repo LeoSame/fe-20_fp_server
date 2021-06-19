@@ -16,7 +16,7 @@ const header = (firstName, lastName) => {
     095 000-00-00 </a>
     </div>`;
 
-  const header = `<div style="color:#000;display:flex;justify-content:space-between;align-items:center;">
+  const header = `<div style="color:#000;display:flex;margin-left:20px;">
   <div>${logo}${greeting}</div>
   ${mobile}
   </div>
