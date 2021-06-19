@@ -10,13 +10,13 @@ const header = (firstName, lastName) => {
     Здравствуйте, ${firstName} ${lastName}!</div>`;
 
   const mobile = `<div>
-    <a style="color:#000; text-decoration:none;" href="tel:+380440000000">
+    <a style="color:#000; text-decoration:none; margin-bottom:20px;" href="tel:+380440000000">
     044 000-00-00 </a><br/>
     <a style="color:#000;text-decoration:none;" href="tel:+380950000000">
     095 000-00-00 </a>
     </div>`;
 
-  const header = `<div style="display: flex;justify-content: space-between;align-items: center;">
+  const header = `<div >
   <div>${logo}${greeting}</div>
   ${mobile}
   </div>
@@ -27,7 +27,7 @@ const header = (firstName, lastName) => {
 
 module.exports = function messageForgotPassword(customer, token) {
   const headers = header(customer.firstName, customer.lastName);
-  const message = `<div style="font-size:18px;padding-bottom:15px;line-height:1.1;font-family:Arial, sans-serif;">
+  const message = `<div style="font-size:18px;padding-bottom:15px;line-height:1.5;font-family:Arial, sans-serif;">
   <a href="https://smart-electronix.herokuapp.com/reset/${token}" target="_blank" rel="noreferrer noopener">Восстановить пароль </a>
   от вашего профиля на сайте smart-electronix.herokuapp.com. Если вы не запрашивали восстановление пароля, проигнорируйте это письмо
   </div>`;
