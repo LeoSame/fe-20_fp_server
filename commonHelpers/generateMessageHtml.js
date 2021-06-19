@@ -777,7 +777,7 @@ module.exports = function messageAddOrder(order) {
                     <tr>
                       <td align="center" style="font-size: 0px">
                         <a
-                          href="${url}product/${p.product.itemNo}"
+                          href="https://smart-electronix.herokuapp.com/product/${p.product.itemNo}"
                           target="_blank"
                           style="text-decoration: none; color: #0b5394; font-size: 16px"
                           ><img
@@ -805,7 +805,9 @@ module.exports = function messageAddOrder(order) {
                             <tr>
                               <td style="margin: 0">
                                 <p style="line-height: 24px; color: #666666; font-size: 16px">
-                                <a href="${url}product/${p.product.itemNo}" target="_blank">
+                                <a href="https://smart-electronix.herokuapp.com/product/${
+                                  p.product.itemNo
+                                }" target="_blank">
                                   <strong> ${p.product.name}, ${p.product.color} </strong>
                                 </a>
                                 </p>
