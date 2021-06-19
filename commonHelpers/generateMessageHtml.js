@@ -1,4 +1,4 @@
-const line = `<div style="background-color: #454545; height:2px; margin-bottom:20px;"></div>`;
+const line = `<div style="background-color:#454545;height:2px;margin-bottom:20px;"></div>`;
 
 const header = (firstName, lastName) => {
   const logo = `
@@ -10,13 +10,13 @@ const header = (firstName, lastName) => {
     Здравствуйте, ${firstName} ${lastName}!</div>`;
 
   const mobile = `<div>
-    <a style="color:#000; text-decoration:none; margin-bottom:20px;" href="tel:+380440000000">
+    <a style="color:#000;text-decoration:none;margin-bottom:20px;" href="tel:+380440000000">
     044 000-00-00 </a><br/>
     <a style="color:#000;text-decoration:none;" href="tel:+380950000000">
     095 000-00-00 </a>
     </div>`;
 
-  const header = `<div style="color:#000; display: flex;justify-content: space-between;align-items: center;">
+  const header = `<div style="color:#000;display:flex;justify-content:space-between;align-items:center;">
   <div>${logo}${greeting}</div>
   ${mobile}
   </div>
