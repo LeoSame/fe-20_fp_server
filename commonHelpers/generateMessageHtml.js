@@ -540,7 +540,7 @@ const footer = () => {
   return footer;
 };
 
-module.exports = function messageСonfirmRegistration(customer) {
+exports.messageСonfirmRegistration = customer => {
   const headers = header();
   const footers = footer();
 
@@ -736,7 +736,7 @@ module.exports = function messageСonfirmRegistration(customer) {
   return `${headers}${message}${footers}`;
 };
 
-module.exports = function messageForgotPassword(customer, token) {
+exports.messageForgotPassword = (customer, token) => {
   const headers = header();
   const footers = footer();
 
@@ -952,7 +952,7 @@ module.exports = function messageForgotPassword(customer, token) {
   return `${headers}${message}${footers}`;
 };
 
-module.exports = function messageAddOrder(order) {
+exports.messageAddOrder = order => {
   const headers = header();
   const footers = footer();
 
