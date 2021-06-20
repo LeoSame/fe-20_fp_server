@@ -4,7 +4,7 @@ const _ = require('lodash');
 const keys = require('../config/keys');
 const sendMail = require('../commonHelpers/mailSender');
 const getConfigs = require('../config/getConfigs');
-const messageForgotPassword = require('../commonHelpers/generateMessageHtml');
+const { messageСonfirmRegistration, messageForgotPassword } = require('../commonHelpers/generateMessageHtml');
 const passport = require('passport');
 const uniqueRandom = require('unique-random');
 const rand = uniqueRandom(10000000, 99999999);
@@ -23,6 +23,8 @@ exports.createCustomer = (req, res, next) => {
   // Clone query object, because validator module mutates req.body, adding other fields to object
   const initialQuery = _.cloneDeep(req.body);
   initialQuery.customerNo = rand();
+
+  initialQuery.сonfirmRegistrationToken = jwt.sign({ foo: 'bar' }, req.body.email);
 
   // Check Validation
   const { errors, isValid } = validateRegistrationForm(req.body);
@@ -59,7 +61,17 @@ exports.createCustomer = (req, res, next) => {
           newCustomer.password = hash;
           newCustomer
             .save()
-            .then(customer => res.json(customer))
+            .then(customer => {
+              const letterSubject = `Подтверждение регистрации на сайте smart-electronix.herokuapp.com`;
+              const letterHtml = messageСonfirmRegistration(customer);
+
+              const mailResult = await sendMail(req.body.email, letterSubject, letterHtml, res);
+
+              const message =
+                'Вы успешно зарегистрированы. Вам отпралено письмо на почту для подтверждения регистрации';
+
+              res.json({ message, mailResult });
+            })
             .catch(err =>
               res.status(400).json({
                 message: `Ошибка на сервере: "${err}" `,
@@ -73,6 +85,37 @@ exports.createCustomer = (req, res, next) => {
         message: `Ошибка на сервере: "${err}" `,
       })
     );
+};
+
+// Controller for confirm registration customer
+exports.forgotRegistration = (req, res, next) => {
+  Customer.findOne({ сonfirmRegistrationToken: req.params.token }).then(async customer => {
+    if (!customer) {
+      return res.status(400).json({
+        message: `Пользователя не найдено`,
+      });
+    } else {
+      Customer.findOneAndUpdate(
+        { сonfirmRegistrationToken: req.params.token },
+        {
+          $set: {
+            enabled: true,
+          },
+        },
+        { new: true }
+      )
+        .then(customer => {
+          res.json({
+            message: 'Регистрация успешно подтверждена',
+          });
+        })
+        .catch(err =>
+          res.status(400).json({
+            message: `Ошибка на сервере: "${err}" `,
+          })
+        );
+    }
+  });
 };
 
 // Controller for customer login
@@ -110,11 +153,17 @@ exports.loginCustomer = async (req, res, next) => {
             isAdmin: customer.isAdmin,
           }; // Create JWT Payload
 
+          if (!customer.enabled) {
+            errors.сonfirmRegistration = 'Вы не подтвердили регистрацию. Проверьте свою почту.';
+            return res.json(errors);
+          }
+
           // Sign Token
           jwt.sign(payload, keys.secretOrKey, { expiresIn: 36000 }, (err, token) => {
             res.json({
               success: true,
               token: token,
+              customer: customer,
             });
           });
         } else {
@@ -274,7 +323,7 @@ exports.forgotPassword = (req, res, next) => {
         return res.status(400).json(errors);
       }
 
-      const token = jwt.sign({ foo: 'bar' }, 'shhhhh');
+      const token = jwt.sign({ foo: 'bar' }, req.body.email);
 
       Customer.findOneAndUpdate(
         { email: req.body.email },
@@ -287,7 +336,7 @@ exports.forgotPassword = (req, res, next) => {
 
           const mailResult = await sendMail(req.body.email, letterSubject, letterHtml, res);
 
-          res.json({ customer, mailResult, token });
+          res.json({ customer, mailResult });
         })
         .catch(err =>
           res.status(400).json({

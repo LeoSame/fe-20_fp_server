@@ -540,6 +540,202 @@ const footer = () => {
   return footer;
 };
 
+module.exports = function messageСonfirmRegistration(customer) {
+  const headers = header();
+  const footers = footer();
+
+  const message = `
+  <tr style="border-collapse: collapse">
+  <td style="padding: 0; margin: 0; background-color: #fafafa" bgcolor="#fafafa" align="center">
+    <table
+      class="es-content-body"
+      style="
+        mso-table-lspace: 0pt;
+        mso-table-rspace: 0pt;
+        border-collapse: collapse;
+        border-spacing: 0px;
+        background-color: #ffffff;
+        width: 600px;
+      "
+      cellspacing="0"
+      cellpadding="0"
+      bgcolor="#ffffff"
+      align="center"
+    >
+      <tr style="border-collapse: collapse">
+        <td
+          style="
+            padding: 0;
+            margin: 0;
+            padding-left: 20px;
+            padding-right: 20px;
+            padding-top: 40px;
+            background-color: transparent;
+          "
+          bgcolor="transparent"
+          align="left"
+        >
+          <table
+            width="100%"
+            cellspacing="0"
+            cellpadding="0"
+            style="mso-table-lspace: 0pt; mso-table-rspace: 0pt; border-collapse: collapse; border-spacing: 0px"
+          >
+            <tr style="border-collapse: collapse">
+              <td valign="top" align="center" style="padding: 0; margin: 0; width: 560px">
+                <table
+                  style="
+                    mso-table-lspace: 0pt;
+                    mso-table-rspace: 0pt;
+                    border-collapse: collapse;
+                    border-spacing: 0px;
+                    background-position: left top;
+                  "
+                  width="100%"
+                  cellspacing="0"
+                  cellpadding="0"
+                  role="presentation"
+                >
+                  <tr style="border-collapse: collapse">
+                    <td align="center" style="padding: 0; margin: 0; padding-top: 15px; padding-bottom: 15px">
+                      <h1
+                        style="
+                          margin: 0;
+                          
+                          mso-line-height-rule: exactly;
+                          font-family: arial, 'helvetica neue', helvetica, sans-serif;
+                          font-size: 20px;
+                          font-style: normal;
+                          font-weight: normal;
+                          color: #333333;
+                        "
+                      >
+                        <strong style="background-color: transparent">ПОДТВЕРЖДЕНИЕ&nbsp;РЕГИСТРАЦИИ</strong>
+                      </h1>
+                    </td>
+                  </tr>
+                  <tr style="border-collapse: collapse">
+                    <td align="center" style="padding: 0; margin: 0; padding-left: 40px; padding-right: 40px">
+                      <p
+                        style="
+                          margin: 0;
+                          -webkit-text-size-adjust: none;
+                          -ms-text-size-adjust: none;
+                          mso-line-height-rule: exactly;
+                          font-family: helvetica, 'helvetica neue', arial, verdana, sans-serif;
+                          
+                          color: #666666;
+                          font-size: 16px;
+                        "
+                      >
+                        ПРИВЕТ,&nbsp;${customer.firstName} ${customer.lastName}!
+                      </p>
+                    </td>
+                  </tr>
+                  <tr style="border-collapse: collapse">
+                    <td align="center" style="padding: 0; margin: 0; padding-right: 35px; padding-left: 40px">
+                      <p
+                        style="
+                          margin: 0;
+                          -webkit-text-size-adjust: none;
+                          -ms-text-size-adjust: none;
+                          mso-line-height-rule: exactly;
+                          font-family: helvetica, 'helvetica neue', arial, verdana, sans-serif;
+                          
+                          color: #666666;
+                          font-size: 16px;
+                        "
+                      >
+                        Вы успешно зарегистрировались в магазине Smart-Electronix
+                      </p>
+                    </td>
+                  </tr>
+                  <tr style="border-collapse: collapse">
+                    <td
+                      align="center"
+                      style="padding: 0; margin: 0; padding-top: 25px; padding-left: 40px; padding-right: 40px"
+                    >
+                      <p
+                        style="
+                          margin: 0;
+                          -webkit-text-size-adjust: none;
+                          -ms-text-size-adjust: none;
+                          mso-line-height-rule: exactly;
+                          font-family: helvetica, 'helvetica neue', arial, verdana, sans-serif;
+                          
+                          color: #666666;
+                          font-size: 16px;
+                        "
+                      >
+                        Для подтверждения регистрации в нашем онлайн-магазине нажмите на кнопку:
+                      </p>
+                    </td>
+                  </tr>
+                  <tr style="border-collapse: collapse">
+                    <td
+                      align="center"
+                      style="
+                        margin: 0;
+                        padding-left: 10px;
+                        padding-right: 10px;
+                        padding-top: 40px;
+                        padding-bottom: 40px;
+                      "
+                    >
+                      <span
+                        class="es-button-border"
+                        style="
+                          border-style: solid;
+                          border-color: #3d5ca3;
+                          background: #ffffff;
+                          border-width: 2px;
+                          display: inline-block;
+                          border-radius: 10px;
+                          width: auto;
+                        "
+                        ><a
+                          href="https://smart-electronix.herokuapp.com/confirm-registration/${customer.сonfirmRegistrationToken}"
+                          class="es-button"
+                          target="_blank"
+                          style="
+                            mso-style-priority: 100 !important;
+                            text-decoration: none;
+                            -webkit-text-size-adjust: none;
+                            -ms-text-size-adjust: none;
+                            mso-line-height-rule: exactly;
+                            color: #3d5ca3;
+                            font-size: 14px;
+                            border-style: solid;
+                            border-color: #ffffff;
+                            border-width: 15px 20px 15px 20px;
+                            display: inline-block;
+                            background: #ffffff;
+                            border-radius: 10px;
+                            font-family: arial, 'helvetica neue', helvetica, sans-serif;
+                            font-weight: bold;
+                            font-style: normal;
+                            line-height: 17px;
+                            width: auto;
+                            text-align: center;
+                          "
+                          >ПОДТВЕРДИТЬ РЕГИСТРАЦИЮ</a
+                        ></span
+                      >
+                    </td>
+                  </tr>
+                </table>
+              </td>
+            </tr>
+          </table>
+        </td>
+      </tr>
+    </table>
+  </td>
+</tr>`;
+
+  return `${headers}${message}${footers}`;
+};
+
 module.exports = function messageForgotPassword(customer, token) {
   const headers = header();
   const footers = footer();
@@ -647,7 +843,7 @@ module.exports = function messageForgotPassword(customer, token) {
                           font-size: 16px;
                         "
                       >
-                        ПРИВЕТ,&nbsp;${customer.firstName} ${customer.lastName} 
+                        ПРИВЕТ,&nbsp;${customer.firstName} ${customer.lastName}! 
                       </p>
                     </td>
                   </tr>

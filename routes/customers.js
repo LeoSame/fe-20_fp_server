@@ -5,6 +5,7 @@ const passport = require('passport');
 //Import controllers
 const {
   createCustomer,
+  forgotRegistration,
   loginCustomer,
   getCustomer,
   editCustomerInfo,
@@ -17,6 +18,11 @@ const {
 // @desc    Register customer
 // @access  Public
 router.post('/', createCustomer);
+
+// @route   POST /customers/profile/forgot-registration
+// @desc    Registration forgot
+// @access  Public
+router.post('/confirm-registration/:token', forgotRegistration);
 
 // @route   POST /customers/login
 // @desc    Login Customer / Returning JWT Token
