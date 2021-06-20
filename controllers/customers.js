@@ -154,8 +154,9 @@ exports.loginCustomer = async (req, res, next) => {
           }; // Create JWT Payload
 
           if (!customer.enabled) {
-            errors.сonfirmRegistration = 'Вы не подтвердили регистрацию. Проверьте свою почту.';
-            return res.json(errors);
+            res.status(400).json({
+              message: `Вы не подтвердили регистрацию. Проверьте свою почту.`,
+            });
           }
 
           // Sign Token
