@@ -61,7 +61,7 @@ exports.createCustomer = (req, res, next) => {
           newCustomer.password = hash;
           newCustomer
             .save()
-            .then(customer => {
+            .then(async customer => {
               const letterSubject = `Подтверждение регистрации на сайте smart-electronix.herokuapp.com`;
               const letterHtml = messageСonfirmRegistration(customer);
 
