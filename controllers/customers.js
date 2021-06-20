@@ -5,7 +5,6 @@ const keys = require('../config/keys');
 const sendMail = require('../commonHelpers/mailSender');
 const getConfigs = require('../config/getConfigs');
 const messageForgotPassword = require('../commonHelpers/generateMessageHtml');
-const messageСonfirmRegistration = require('../commonHelpers/generateMessageHtml');
 const passport = require('passport');
 const uniqueRandom = require('unique-random');
 const rand = uniqueRandom(10000000, 99999999);
