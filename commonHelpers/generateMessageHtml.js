@@ -241,7 +241,7 @@ const footer = () => {
                       >
                         <a
                           target="_blank"
-                          href="https://dashboard.heroku.com"
+                          href="https://smart-electronix.herokuapp.com"
                           style="
                             -webkit-text-size-adjust: none;
                             -ms-text-size-adjust: none;
