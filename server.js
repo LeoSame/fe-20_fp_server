@@ -23,11 +23,13 @@ const wishlist = require('./routes/wishlist');
 const comments = require('./routes/comments');
 const shippingMethods = require('./routes/shippingMethods');
 const paymentMethods = require('./routes/paymentMethods');
-const errors = require('./routes/errors');
+// const errors = require('./routes/errors');
 const partners = require('./routes/partners');
-// const mainRoute = require('./routes/index');
+const mainRoute = require('./routes/index');
 
 const app = express();
+
+app.use(express.static(__dirname));
 
 app.use(cors());
 
@@ -68,19 +70,19 @@ app.use('/api/wishlist', wishlist);
 app.use('/api/comments', comments);
 app.use('/api/shipping-methods', shippingMethods);
 app.use('/api/payment-methods', paymentMethods);
-app.use('/api/error', errors);
+// app.use('/api/error', errors);
 app.use('/api/partners', partners);
-// app.use('/', mainRoute);
+app.use('/', mainRoute);
 
 // Server static assets if in production
-if (process.env.NODE_ENV === 'production') {
-  // Set static folder
-  app.use(express.static(path.join(__dirname, 'static')));
+// if (process.env.NODE_ENV === 'production') {
+//   // Set static folder
+//   app.use(express.static(__dirname + 'client/build'));
 
-  app.get('/*', (req, res) => {
-    res.sendFile(path.join(__dirname, 'static', 'index.html'));
-  });
-}
+//   app.get('*', (req, res) => {
+//     res.sendFile(path.resolve(__dirname + 'client/build/index.html'));
+//   });
+// }
 
 const port = process.env.PORT || 5000;
 
