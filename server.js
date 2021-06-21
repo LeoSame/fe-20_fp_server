@@ -25,7 +25,7 @@ const shippingMethods = require('./routes/shippingMethods');
 const paymentMethods = require('./routes/paymentMethods');
 const errors = require('./routes/errors');
 const partners = require('./routes/partners');
-const mainRoute = require('./routes/index');
+// const mainRoute = require('./routes/index');
 
 const app = express();
 
@@ -70,7 +70,7 @@ app.use('/api/shipping-methods', shippingMethods);
 app.use('/api/payment-methods', paymentMethods);
 app.use('/api/error', errors);
 app.use('/api/partners', partners);
-app.use('/', mainRoute);
+// app.use('/', mainRoute);
 
 // Server static assets if in production
 if (process.env.NODE_ENV === 'production') {
