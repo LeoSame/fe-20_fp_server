@@ -4,29 +4,37 @@ const queryCreator = require('../commonHelpers/queryCreator');
 const _ = require('lodash');
 
 exports.addImage = (req, res, next) => {
-  let { name, product, affiliation } = req.body;
-  const { img } = req.files;
-  let fileName = name + '.jpg';
-  img.mv(path.resolve(__dirname, '..', 'static', fileName));
-  const imageUrl = `${__dirname}/static/${fileName}`;
+  try {
+    let { name, affiliation } = req.body;
 
-  Image.findOne({ name: name + '.jpg' }).then(image => {
-    if (image) {
-      return res.status(400).json({ message: `Картинка с названием "${image.name}" уже существует` });
-    } else {
-      const initialQuery = _.cloneDeep({ ...req.body, imageUrl });
-      const newImage = new Image(queryCreator(initialQuery));
+    const { img } = req.files;
+    let fileName = name + '.jpg';
+    let pathName = path.resolve(__dirname, '..', 'static', 'img', affiliation, fileName);
 
-      newImage
-        .save()
-        .then(image => res.json(image))
-        .catch(err =>
-          res.status(400).json({
-            message: `Произошла ошибка на сервере: "${err}" `,
-          })
-        );
-    }
-  });
+    img.mv(pathName);
+
+    Image.findOne({ name: name + '.jpg' }).then(image => {
+      if (image) {
+        return res.status(400).json({ message: `Картинка с названием "${image.name}" уже существует` });
+      } else {
+        const initialQuery = _.cloneDeep({ ...req.body, imageUrl: pathName });
+        const newImage = new Image(queryCreator(initialQuery));
+
+        newImage
+          .save()
+          .then(image => res.json(image))
+          .catch(err =>
+            res.status(400).json({
+              message: `Произошла ошибка на сервере: "${err}" `,
+            })
+          );
+      }
+    });
+  } catch (err) {
+    res.status(400).json({
+      message: `Произошла ошибка на сервере: "${err}" `,
+    });
+  }
 };
 
 // exports.updateBrand = (req, res, next) => {

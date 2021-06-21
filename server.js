@@ -4,8 +4,10 @@ const bodyParser = require('body-parser');
 const cors = require('cors');
 const passport = require('passport');
 const path = require('path');
+const fileUpload = require('express-fileupload');
 require('dotenv').config();
 
+const images = require('./routes/images');
 const brands = require('./routes/brands');
 const globalConfigs = require('./routes/globalConfigs');
 const customers = require('./routes/customers');
@@ -36,6 +38,7 @@ app.use(cors());
 // Body parser middleware
 app.use(bodyParser.urlencoded({ extended: false }));
 app.use(bodyParser.json());
+app.use(fileUpload({}));
 
 // DB Config
 const db = require('./config/keys').mongoURI;
@@ -53,6 +56,7 @@ app.use(passport.initialize());
 require('./config/passport')(passport);
 
 // Use Routes
+app.use('/api/images', images);
 app.use('/api/brands', brands);
 app.use('/api/configs', globalConfigs);
 app.use('/api/customers', customers);
