@@ -5,24 +5,24 @@ const passport = require('passport'); // multer for parsing multipart form data 
 //Import controllers
 const { addImage, updateImage, deleteImage, getImage } = require('../controllers/images');
 
-// @route   POST /brands
-// @desc    Create new brand
+// @route   POST /images
+// @desc    Create new images
 // @access  Private
 router.post('/', addImage);
 
-// @route   PUT /brands/:id
-// @desc    Update existing brand
+// @route   PUT /images/:name
+// @desc    Update existing images
 // @access  Private
-router.put('/:name', updateImage);
+router.put('/:name', passport.authenticate('jwt-admin', { session: false }), updateImage);
 
-// @route   DELETE /brands/:id
-// @desc    DELETE existing brand
+// @route   DELETE /images/:name
+// @desc    DELETE existing images
 // @access  Private
 router.delete('/:name', deleteImage);
 
-// @route   GET /brands
-// @desc    GET existing brand
+// @route   GET /images
+// @desc    GET existing images
 // @access  Public
-router.get('/', getImage);
+router.get('/', passport.authenticate('jwt-admin', { session: false }), getImage);
 
 module.exports = router;

@@ -93,10 +93,12 @@ exports.deleteImage = (req, res, next) => {
 exports.getImage = async (req, res, next) => {
   const perPage = Number(req.query.perPage);
   const startPage = Number(req.query.startPage);
+  const sort = req.query.sort;
   try {
     const images = await Image.find({ affiliation: req.query.affiliation })
       .skip(startPage * perPage - perPage)
-      .limit(perPage);
+      .limit(perPage)
+      .sort(sort);
 
     const imagesQuantity = await Image.find({ affiliation: req.query.affiliation });
 
