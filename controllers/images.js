@@ -14,7 +14,7 @@ exports.addImage = (req, res, next) => {
         return res.status(400).json({ message: `Картинка с названием "${image.name}" уже существует` });
       } else {
         let fileName = name + '.jpg';
-        let pathName = `http://${req.headers.host}/static/img/${affiliation}/${fileName}`;
+        let pathName = `https://fe-20-final-project.herokuapp.com/static/img/${affiliation}/${fileName}`;
 
         img.mv(path.resolve(__dirname, '..', 'static', 'img', affiliation, fileName));
 
