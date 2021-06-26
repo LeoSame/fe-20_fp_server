@@ -5,7 +5,7 @@ const { unlink } = require('fs');
 const _ = require('lodash');
 
 exports.addImage = (req, res, next) => {
-  let { name, affiliation } = req.body;
+  let { name, affiliation, size } = req.body;
   const { img } = req.files;
 
   try {
@@ -18,7 +18,7 @@ exports.addImage = (req, res, next) => {
 
         img.mv(path.resolve(__dirname, '..', 'static', 'img', affiliation, fileName));
 
-        const initialQuery = _.cloneDeep({ ...req.body, imageUrl: pathName });
+        const initialQuery = _.cloneDeep({ ...req.body, imageUrl: pathName, name: name + '_' + size });
         const newImage = new Image(queryCreator(initialQuery));
 
         newImage
