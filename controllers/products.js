@@ -188,16 +188,16 @@ exports.getProductByColor = (req, res, next) => {
 
 exports.getProductsByArrayId = (req, res, next) => {
   Product.find({
-    itemNo: req.body.itemNo,
+    productUrl: req.body.productUrl,
   })
     .then(async products => {
       if (!products) {
         res.status(400).json({
-          message: `Продукты ${req.body.itemNo} не найдены`,
+          message: `Продукты ${req.body.productUrl} не найдены`,
         });
       } else {
         const sortProducts = products.sort(function (a, b) {
-          return req.body.itemNo.indexOf(a.itemNo) - req.body.itemNo.indexOf(b.itemNo);
+          return req.body.productUrl.indexOf(a.productUrl) - req.body.productUrl.indexOf(b.productUrl);
         });
 
         res.json(sortProducts);
