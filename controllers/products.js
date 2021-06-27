@@ -24,19 +24,19 @@ exports.addProduct = (req, res, next) => {
 
   productFields.itemNo = rand();
 
-  try {
-    productFields.name = productFields.name.toLowerCase().trim().replace(/\s\s+/g, ' ');
+  // try {
+  //   productFields.name = productFields.name.toLowerCase().trim().replace(/\s\s+/g, ' ');
 
-    // const imageUrls = req.body.previewImages.map(img => {
-    //   return `/img/products/${productFields.itemNo}/${img.name}`;
-    // });
+  //   // const imageUrls = req.body.previewImages.map(img => {
+  //   //   return `/img/products/${productFields.itemNo}/${img.name}`;
+  //   // });
 
-    // productFields.imageUrls = _.cloneDeep(imageUrls);
-  } catch (err) {
-    res.status(400).json({
-      message: `Произошла ошибка на сервере: "${err}" `,
-    });
-  }
+  //   // productFields.imageUrls = _.cloneDeep(imageUrls);
+  // } catch (err) {
+  //   res.status(400).json({
+  //     message: `Произошла ошибка на сервере: "${err}" `,
+  //   });
+  // }
 
   const updatedProduct = queryCreator(productFields);
 
