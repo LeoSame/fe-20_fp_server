@@ -82,7 +82,7 @@ router.post('/search', searchProducts);
 // @route   GET /products/:id
 // @desc    GET existing product by id
 // @access  Public
-router.get('/:itemNo', getProductById);
+router.get('/:productUrl', getProductById);
 
 // @route   POST /products/color
 // @desc    POST appropriate filtered products by color
