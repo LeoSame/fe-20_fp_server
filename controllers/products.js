@@ -107,6 +107,26 @@ exports.getProducts = (req, res, next) => {
 
 exports.getProductById = (req, res, next) => {
   Product.findOne({
+    itemNo: req.params.itemNo,
+  })
+    .then(product => {
+      if (!product) {
+        res.status(400).json({
+          message: `Продукт с itemNo ${req.params.itemNo} не найден`,
+        });
+      } else {
+        res.json(product);
+      }
+    })
+    .catch(err =>
+      res.status(400).json({
+        message: `Произошла ошибка на сервере: "${err}" `,
+      })
+    );
+};
+
+exports.getProductByUrl = (req, res, next) => {
+  Product.findOne({
     productUrl: req.params.productUrl,
   })
     .then(product => {
