@@ -107,12 +107,12 @@ exports.getProducts = (req, res, next) => {
 
 exports.getProductById = (req, res, next) => {
   Product.findOne({
-    itemNo: req.params.itemNo,
+    productUrl: req.params.productUrl,
   })
     .then(product => {
       if (!product) {
         res.status(400).json({
-          message: `Продукт с itemNo ${req.params.itemNo} не найден`,
+          message: `Продукт с productUrl ${req.params.productUrl} не найден`,
         });
       } else {
         res.json(product);
