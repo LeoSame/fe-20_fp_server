@@ -1866,7 +1866,7 @@ exports.messageAddQuickOrder = order => {
                           <strong>
                             Сумма к оплате:
                             <span> ${order.totalSum + ' грн.'}
-                            } </span>
+                          </span>
                           </strong>
                         </p>
                       </td>
