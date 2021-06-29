@@ -94,7 +94,7 @@ exports.getComments = async (req, res, next) => {
       .limit(perPage)
       .sort(sort);
 
-    const commentsQuantity = await Order.find();
+    const commentsQuantity = await Comment.find();
 
     res.json({ comments, commentsQuantity: commentsQuantity.length });
   } catch (err) {
