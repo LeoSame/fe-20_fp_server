@@ -13,7 +13,12 @@ exports.addImage = (req, res, next) => {
       if (image) {
         return res.status(400).json({ message: `Картинка с названием "${image.name}" уже существует` });
       } else {
-        let fileName = name + '_' + size + '.jpg';
+        let fileName = '';
+        if (affiliation === 'brands') {
+          fileName = name + '_' + '.png';
+        } else {
+          fileName = name + '_' + size + '.jpg';
+        }
         let pathName = `https://fe-20-final-project.herokuapp.com/static/img/${affiliation}/${fileName}`;
 
         img.mv(path.resolve(__dirname, '..', 'static', 'img', affiliation, fileName));
