@@ -202,7 +202,7 @@ exports.changeStatus = (req, res, next) => {
         .populate('customerId')
         .then(async order => {
           res.status(200).json({
-            message: `Статус заказа №:${order.orderNo} изменён на ${order.status} `,
+            message: `Статус заказа №${order.orderNo} изменён на ${order.status} `,
             status: order.status,
           });
         })

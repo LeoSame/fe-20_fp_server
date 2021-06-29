@@ -109,3 +109,14 @@ exports.getImage = async (req, res, next) => {
     });
   }
 };
+
+exports.getImageAffiliation = async (req, res, next) => {
+  try {
+    const images = await Image.find({ affiliation: req.query.affiliation });
+    res.json({ images });
+  } catch (err) {
+    res.status(400).json({
+      message: `Произошла ошибка на сервере: "${err}" `,
+    });
+  }
+};

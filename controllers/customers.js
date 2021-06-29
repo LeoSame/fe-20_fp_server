@@ -67,8 +67,7 @@ exports.createCustomer = (req, res, next) => {
 
               const mailResult = await sendMail(req.body.email, letterSubject, letterHtml, res);
 
-              const message =
-                'Вы успешно зарегистрированы. Вам отпралено письмо на почту для подтверждения регистрации';
+              const message = 'Вы успешно зарегистрированы. Вам отпралено письмо на почту для подтверждения email';
 
               res.json({ message, mailResult });
             })

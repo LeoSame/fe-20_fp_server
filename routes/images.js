@@ -3,11 +3,11 @@ const router = express.Router();
 const passport = require('passport'); // multer for parsing multipart form data (files)
 
 //Import controllers
-const { addImage, updateImage, deleteImage, getImage } = require('../controllers/images');
+const { addImage, updateImage, deleteImage, getImage, getImageAffiliation } = require('../controllers/images');
 
 // @route   POST /images
 // @desc    Create new images
-// @access  Private
+// @access  Public
 router.post('/', addImage);
 
 // @route   PUT /images/:name
@@ -17,12 +17,17 @@ router.put('/:name', passport.authenticate('jwt-admin', { session: false }), upd
 
 // @route   DELETE /images/:name
 // @desc    DELETE existing images
-// @access  Private
+// @access  Public
 router.delete('/:name', deleteImage);
 
 // @route   GET /images
 // @desc    GET existing images
-// @access  Public
+// @access  Private
+router.get('/affiliation', passport.authenticate('jwt-admin', { session: false }), getImageAffiliation);
+
+// @route   GET /images
+// @desc    GET existing images
+// @access  Private
 router.get('/', passport.authenticate('jwt-admin', { session: false }), getImage);
 
 module.exports = router;
