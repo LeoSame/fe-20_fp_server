@@ -4,7 +4,7 @@ const Product = require('../models/Product');
 const sendMail = require('../commonHelpers/mailSender');
 const validateOrderForm = require('../validation/validationHelper');
 const queryCreator = require('../commonHelpers/queryCreator');
-const { messageAddOrder } = require('../commonHelpers/generateMessageHtml');
+const { messageAddOrder, messageAddQuickOrder } = require('../commonHelpers/generateMessageHtml');
 const productAvailibilityChecker = require('../commonHelpers/productAvailibilityChecker');
 const subtractProductsFromCart = require('../commonHelpers/subtractProductsFromCart');
 const _ = require('lodash');
@@ -78,7 +78,12 @@ exports.placeOrder = async (req, res, next) => {
         .save()
         .then(async order => {
           const letterSubject = `Заказ №${order.orderNo} успешно принят!`;
-          const letterHtml = messageAddOrder(order);
+          let letterHtml = '';
+          if (order.deliveryAddress) {
+            letterHtml = messageAddOrder(order);
+          } else {
+            letterHtml = messageAddQuickOrder(order);
+          }
 
           const mailResult = await sendMail(subscriberMail, letterSubject, letterHtml, res);
 
