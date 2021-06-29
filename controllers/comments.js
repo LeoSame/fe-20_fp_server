@@ -76,7 +76,7 @@ exports.deleteComment = (req, res, next) => {
   });
 };
 
-exports.getComments = (req, res, next) => {
+exports.getComments = async (req, res, next) => {
   const perPage = Number(req.query.perPage);
   const startPage = Number(req.query.startPage);
   let sort = req.query.sort;
