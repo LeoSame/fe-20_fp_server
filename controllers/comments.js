@@ -77,16 +77,31 @@ exports.deleteComment = (req, res, next) => {
 };
 
 exports.getComments = (req, res, next) => {
-  Comment.find()
-    .populate('product')
-    .populate('category')
-    .populate('customer')
-    .then(comments => res.status(200).json(comments))
-    .catch(err =>
-      res.status(400).json({
-        message: `Произошла ошибка на сервере: "${err}" `,
-      })
-    );
+  const perPage = Number(req.query.perPage);
+  const startPage = Number(req.query.startPage);
+  let sort = req.query.sort;
+
+  if (!sort) {
+    sort = '-date';
+  }
+
+  try {
+    const comments = await Comment.find()
+      .populate('product')
+      .populate('category')
+      .populate('customer')
+      .skip(startPage * perPage - perPage)
+      .limit(perPage)
+      .sort(sort);
+
+    const commentsQuantity = await Order.find();
+
+    res.json({ comments, commentsQuantity: commentsQuantity.length });
+  } catch (err) {
+    res.status(400).json({
+      message: `Произошла ошибка на сервере: "${err}" `,
+    });
+  }
 };
 
 exports.getCustomerComments = (req, res, next) => {
