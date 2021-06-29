@@ -203,6 +203,7 @@ exports.changeStatus = (req, res, next) => {
         .then(async order => {
           res.status(200).json({
             message: `Статус заказа №:${order.orderNo} изменён на ${order.status} `,
+            status: order.status,
           });
         })
         .catch(err =>
