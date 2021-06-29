@@ -201,7 +201,9 @@ exports.changeStatus = (req, res, next) => {
       Order.findOneAndUpdate({ _id: req.params.id }, { $set: order }, { new: true })
         .populate('customerId')
         .then(async order => {
-          res.json({ order });
+          res.status(200).json({
+            message: `Статус заказа №:${order.orderNo} изменён на ${order.status} `,
+          });
         })
         .catch(err =>
           res.status(400).json({
